@@ -274,11 +274,11 @@ int removeElementDisc(listDisc l,TElementDisc *e, char nome[]){
     }
     return 0;
 }
-int removeElementAv(listAv l,TElementStudent *e, int idAv){
-    TNodoStudent *n;
+int removeElementAv(listAv l,TElementAv *e, char nomeAv[]){
+    TNodoAv *n;
     n = l->first;
     while(n){
-        if(n->info.id == idAv){
+        if(strcmp(n->info.nomeAv,nomeAv)){
             if(l->size == 1){
                 l->first = NULL;
                 l->last = NULL;

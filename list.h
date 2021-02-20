@@ -44,7 +44,7 @@ typedef TListDisc *listDisc;
 
 //Lista para armazenar as avaliações
 typedef struct{
-    int idAv;
+    char nomeAv[20];
 }TElementAv;
 
 typedef struct NodoAv{
@@ -76,7 +76,7 @@ int insertPositionAv(listAv,TElementAv,int);
 
 int removeElementStudent(listStudent,TElementStudent *,TMatricula);
 int removeElementDisc(listDisc,TElementDisc *,char []);
-int removeElementAv(listAv,TElementStudent *,int);
+int removeElementAv(listAv,TElementAv *,char []);
 
 int deleteListStudent(listStudent);
 int deleteListDisc(listDisc);
