@@ -4,7 +4,7 @@
 
 /*Funções para Manipulação das 3 diferentes listas, Aluno, Disciplina e Avaliação*/
 
-void creatListStudent(){
+listStudent creatListStudent(){
     listStudent l = (listStudent)malloc(sizeof(TListSudent));
     if(l){
         l->size = 0;
@@ -13,7 +13,7 @@ void creatListStudent(){
     }
     return l;
 }
-void creatListDisc(){
+listDisc creatListDisc(){
     listDisc l = (listDisc)malloc(sizeof(TListDisc));
     if(l){
         l->size = 0;
@@ -22,7 +22,7 @@ void creatListDisc(){
     }
     return l;
 }
-void creatListAv(){
+listAv creatListAv(){
     listAv l = (listAv)malloc(sizeof(TListAv));
     if(l){
         l->size = 0;

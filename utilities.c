@@ -5,9 +5,9 @@
 
 void openFile(FILE **Arqv){
     
-    *Arqv = fopen("Arquivo.txt", "r+");
+    *Arqv = fopen("Dados.txt", "r+");
     if(!*Arqv)
-        *Arqv = fopen("Arquivo.txt","w+");
+        *Arqv = fopen("Dados.txt","w+");
 }
 
 void retiraEnter(char string[]){

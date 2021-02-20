@@ -27,7 +27,7 @@ typedef struct{
     char nome[20];
     int value;
     int note;
-    TListAv la;
+    TListAv *la;
 }TElementDisc;
 
 typedef struct NodoDisc{
@@ -58,9 +58,9 @@ typedef struct{
 }TListAv;
 typedef TListAv *listAv;
 
-void creatListStudent();
-void creatListDisc();
-void creatListAv();
+listStudent creatListStudent();
+listDisc creatListDisc();
+listAv creatListAv();
 
 int insertStartStudent(listStudent,TElementStudent);
 int insertStartDisc(listDisc,TElementDisc);
@@ -70,7 +70,33 @@ int insertEndStudent(listStudent,TElementStudent);
 int insertEndDisc(listDisc,TElementDisc);
 int insertEndAv(listAv,TElementAv);
 
+int insertPositionStudent(listStudent,TElementStudent,int);
+int insertPositionDisc(listDisc,TElementDisc,int);
+int insertPositionAv(listAv,TElementAv,int);
 
+int removeElementStudent(listStudent,TElementStudent *,TMatricula);
+int removeElementDisc(listDisc,TElementDisc *,char []);
+int removeElementAv(listAv,TElementStudent *,int);
+
+int deleteListStudent(listStudent);
+int deleteListDisc(listDisc);
+int deleteListAv(listAv);
+
+int getElementStudent(listStudent,TElementStudent *,int);
+int getElementDisc(listDisc,TElementDisc *,int);
+int getElementAv(listAv,TElementAv *,int);
+
+int emptyListStudent(listStudent );
+int emptyListDisc(listDisc);
+int emptyListAv(listAv );
+
+int fullListStudent(listStudent);
+int fullListDisc(listDisc);
+int fullListAv(listAv);
+
+int getSizeStudent(listStudent);
+int getSizeDisc(listDisc);
+int getSizeAv(listAv);
 
 
 #endif
