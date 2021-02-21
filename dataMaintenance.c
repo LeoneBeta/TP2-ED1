@@ -3,9 +3,10 @@
 #include <string.h>
 #include "dataMaintenance.h"
 #include "list.h"
+#include "utilities.h"
 
 void loadFile(FILE *Arqv){
-    char *string, value[2];
+    char string[500], value[2], mat[10];
     int i=0,j=0;
 
     TNodoStudent *nStudent;
@@ -14,22 +15,30 @@ void loadFile(FILE *Arqv){
 
     listStudent lstudent;
 
-    nStudent = (TNodoStudent*)malloc(sizeof(TNodoStudent));
+    openFile(&Arqv);
 
-    openFile(Arqv);
-    
+    nStudent = (TNodoStudent*)malloc(sizeof(TNodoStudent));
     lstudent = creatListStudent();
 
     if(lstudent == NULL)
         printf("\nErro ao criar a Lista de Alunos");
 
 
-
-
-    //~~~~EM DESENVOLVIMENTO~~~~~
+    /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
     
     fseek(Arqv,0,SEEK_SET);
-    while(fgets(string,300,Arqv)){
+    while(fgets(string,500,Arqv)){
+        while(string[i] != '#'){
+            if(string[1 != '#']){
+                mat[j] = string[i];
+            j++;
+            i++;
+            }else
+                mat[j] = string[i];
+            nStudent->info.id = atoi(mat);
+        }
+
+        j=0;
         while(string[i] != '#'){
             if(string[i] != '#'){
                 nStudent->info.nome[j] = string[i];
@@ -54,21 +63,21 @@ void loadFile(FILE *Arqv){
         do{
             while(string[i] != '#'){
                 if(string[i] != '#'){
-                    nStudent->ld->first->info.nome[j] = string[i];
+                    nDisc->info.nome[j] = string[i];
                     i++;
                     j++;
                 }else
-                    nStudent->ld->first->info.nome[j] = '\0';
+                    nDisc->info.nome[j] = '\0';
             }
 
             j=0;
             while(string[i] != '#'){
                 if(string[i] != '#'){
-                    nStudent->ld->first->la->first->info.nomeAv[j] = string[i];
+                    nAv->info.nomeAv[j] = string[i];
                     i++;
                     j++;
                 }else
-                    nStudent->ld->first->la->first->info.nomeAv[j] = '\0';
+                    nAv->info.nomeAv[j] = '\0';
             }
 
             j=0;
@@ -77,19 +86,23 @@ void loadFile(FILE *Arqv){
                     i++;
                     j++;
             }
-            nStudent->ld->first->info.value = atoi(value);
+            nDisc->info.value = atoi(value);
 
             j=0;
-            while(string[i] != "@" || string[i] != '\n'){
+            while(string[i] != '@' || string[i] != '\n'){
                     value[j] = string[i];
                     i++;
                     j++;
             }
-            nStudent->ld->first->info.note = atoi(value);
+            nDisc->info.note = atoi(value);
+
+        printf("Matricula: %d", nStudent->info.id);
+        printf("Nome do Aluno: %s", nStudent->info.nome);
+        printf("Data de Nascimento: %s", nStudent->info.birthDate);
 
         }while(string[i] != '\n');
 
-        //~~~~EM DESENVOLVIMENTO~~~~~
+        /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
 
 
         

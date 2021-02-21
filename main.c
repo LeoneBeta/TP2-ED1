@@ -4,6 +4,7 @@
 
 #include "list.h"
 #include "utilities.h"
+#include "dataMaintenance.h"
 
 int main(){
     setlocale(LC_ALL,"portuguese");
@@ -27,24 +28,24 @@ int main(){
     printf("\n~~ 12 - Consulta Matricula ~~~~~~");
     printf("\n~~ 13 - Consulta Nome ~~~~~~~~~~~");
     printf("\n~~ 14 - Gravar ~~~~~~~~~~~~~~~~~~");
-    printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     fgets(menu,3,stdin);
     retiraEnter(menu);
 
-    if(menu == '1'){}
-    if(menu == '2'){}
-    if(menu == '3'){}
-    if(menu == '4'){}
-    if(menu == '5'){}
-    if(menu == '6'){}
-    if(menu == '7'){}
-    if(menu == '8'){}
-    if(menu == '9'){}
-    if(menu == '10'){}
-    if(menu == '11'){}
-    if(menu == '12'){}
-    if(menu == '13'){}
-    if(menu == '14'){}
+    if(menu[0] == '1'){loadFile(Arqv);}
+    if(menu[0] == '2'){}
+    if(menu[0] == '3'){}
+    if(menu[0] == '4'){}
+    if(menu[0] == '5'){}
+    if(menu[0] == '6'){}
+    if(menu[0] == '7'){}
+    if(menu[0] == '8'){}
+    if(menu[0] == '9'){}
+    if(menu[0] == '1' && menu[1] == '0'){}
+    if(menu[0] == '1' && menu[1] == '1'){}
+    if(menu[0] == '1' && menu[1] == '2'){}
+    if(menu[0] == '1' && menu[1] == '3'){}
+    if(menu[0] == '1' && menu[1] == '4'){}
 
     return 0;
 }

@@ -12,7 +12,7 @@ typedef struct{
 typedef struct NodoStudent{
     TElementStudent info;
     struct NodoStudent *prior, *next;
-    TListDisc *ld;
+    struct listDisc *ld;
 }TNodoStudent;
 
 typedef struct{
@@ -32,7 +32,7 @@ typedef struct{
 typedef struct NodoDisc{
     TElementDisc info;
     struct NodoDisc *prior, *next;
-    TListAv *la;
+    struct listAv *la;
 }TNodoDisc;
 
 typedef struct{
@@ -49,7 +49,7 @@ typedef struct{
 
 typedef struct NodoAv{
     TElementAv info;
-    struct NodoDisc *prior, *next;
+    struct NodoAv *prior, *next;
 }TNodoAv;
 
 typedef struct{

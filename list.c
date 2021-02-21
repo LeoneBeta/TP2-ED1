@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "list.h"
+
 
 /*Funções para Manipulação das 3 diferentes listas, Aluno, Disciplina e Avaliação*/
 
@@ -142,7 +144,7 @@ int insertPositionStudent(listStudent l, TElementStudent e, int position){
     int i;
 
     if(position == 1)
-        return insertStartStudet(l,e);
+        return insertStartStudent(l,e);
     else
         if(position == l->size+1)
             return insertEndStudent(l,e);
@@ -245,7 +247,7 @@ int removeElementStudent(listStudent l,TElementStudent *e, TMatricula mat){
                         n->next->prior = n->prior;
                     }
                     *e = n->info;
-                    deleteListDisc(n->ld);
+                    //deleteListDisc(n->ld);
                     free(n);
                     return 1;
         }else
@@ -274,7 +276,7 @@ int removeElementDisc(listDisc l,TElementDisc *e, char nome[]){
                         n->next->prior = n->prior;
                     }
                     *e = n->info;
-                    deleteListAv(n->la);
+                    //deleteListAv(n->la);
                     free(n);
                     return 1;
         }else
@@ -316,7 +318,7 @@ int deleteListStudent(listStudent l){
     while(l->first){
         n = l->first;
         l->first = l->first->next;
-        deleteListDisc(n->ld);
+        //deleteListDisc(n->ld);
         free(n);
     }
     free(l);
@@ -326,7 +328,7 @@ int deleteListDisc(listDisc l){
     while(l->first){
         n = l->first;
         l->first = l->first->next;
-        deleteListAv(n->la);
+        //deleteListAv(n->la);
         free(n);
     }
     free(l);

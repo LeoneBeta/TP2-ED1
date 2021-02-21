@@ -21,5 +21,5 @@ void retiraEnter(char string[]){
 }
 
 void closeFile(FILE **Arqv){
-    fclose(Arqv);
+    fclose(*Arqv);
 }
