@@ -7,12 +7,12 @@ typedef struct{
     TMatricula id;
     char nome[100];
     char birthDate[11];
-    TListDisc *ld;
 }TElementStudent;
 
 typedef struct NodoStudent{
     TElementStudent info;
     struct NodoStudent *prior, *next;
+    TListDisc *ld;
 }TNodoStudent;
 
 typedef struct{
@@ -27,12 +27,12 @@ typedef struct{
     char nome[20];
     int value;
     int note;
-    TListAv *la;
 }TElementDisc;
 
 typedef struct NodoDisc{
     TElementDisc info;
     struct NodoDisc *prior, *next;
+    TListAv *la;
 }TNodoDisc;
 
 typedef struct{

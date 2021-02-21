@@ -45,6 +45,7 @@ int insertStartStudent(listStudent l, TElementStudent e){
             l->last = n;
         l->first = n;
         l->size++;
+        creatListDisc(n->ld);
         return 1;
     }else
         return 0;
@@ -62,6 +63,7 @@ int insertStartDisc(listDisc l,TElementDisc e){
             l->last = n;
         l->first = n;
         l->size++;
+        creatListAv(n->la);
         return 1;
     }else
         return 0;
@@ -96,6 +98,7 @@ int insertEndStudent(listStudent l, TElementStudent e){
         l->last->next = n;
         l->last = n;
         l->size++;
+        creatListDisc(n->ld);
         return 1;
     }else
         return 0;
@@ -112,6 +115,7 @@ int insertEndDisc(listDisc l, TElementDisc e){
         l->last->next = n;
         l->last = n;
         l->size++;
+        creatListAv(n->la);
         return 1;
     }else
         return 0;
@@ -158,6 +162,7 @@ int insertPositionStudent(listStudent l, TElementStudent e, int position){
                 nAux->prior->next = n;
                 nAux->prior = n;
                 l->size++;
+                creatListDisc(n->ld);
                 return 1;
             }
 }
@@ -186,6 +191,7 @@ int insertPositionDisc(listDisc l, TElementDisc e, int position){
                 nAux->prior->next = n;
                 nAux->prior = n;
                 l->size++;
+                creatListAv(n->la);
                 return 1;
             }
 }
@@ -239,6 +245,7 @@ int removeElementStudent(listStudent l,TElementStudent *e, TMatricula mat){
                         n->next->prior = n->prior;
                     }
                     *e = n->info;
+                    deleteListDisc(n->ld);
                     free(n);
                     return 1;
         }else
@@ -267,6 +274,7 @@ int removeElementDisc(listDisc l,TElementDisc *e, char nome[]){
                         n->next->prior = n->prior;
                     }
                     *e = n->info;
+                    deleteListAv(n->la);
                     free(n);
                     return 1;
         }else
@@ -308,6 +316,7 @@ int deleteListStudent(listStudent l){
     while(l->first){
         n = l->first;
         l->first = l->first->next;
+        deleteListDisc(n->ld);
         free(n);
     }
     free(l);
@@ -317,6 +326,7 @@ int deleteListDisc(listDisc l){
     while(l->first){
         n = l->first;
         l->first = l->first->next;
+        deleteListAv(n->la);
         free(n);
     }
     free(l);

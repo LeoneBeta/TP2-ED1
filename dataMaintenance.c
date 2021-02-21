@@ -8,27 +8,20 @@ void loadFile(FILE *Arqv){
     char *string, value[2];
     int i=0,j=0;
 
-    TElementStudent es;
-    TElementDisc ed;
-    TElementAv ea;
+    TNodoStudent *nStudent;
+    TNodoDisc *nDisc;
+    TNodoAv *nAv;
 
     listStudent lstudent;
-    listDisc ldisc;
-    listAv lav;
+
+    nStudent = (TNodoStudent*)malloc(sizeof(TNodoStudent));
 
     openFile(Arqv);
     
-
     lstudent = creatListStudent();
-    ldisc = creatListDisc();
-    lav = creatListAv();
 
     if(lstudent == NULL)
         printf("\nErro ao criar a Lista de Alunos");
-    if(ldisc == NULL)
-        printf("\nErro ao criar a Lista de Disciplinas");
-    if(lav == NULL)
-        printf("\nErro ao criar a Lista de Tarefas");
 
 
 
@@ -37,51 +30,62 @@ void loadFile(FILE *Arqv){
     
     fseek(Arqv,0,SEEK_SET);
     while(fgets(string,300,Arqv)){
+        while(string[i] != '#'){
+            if(string[i] != '#'){
+                nStudent->info.nome[j] = string[i];
+                j++;
+                i++;
+            }else
+                nStudent->info.nome[j] = '\0';
+        }
+
+        j=0;
+        while(string[i] != '#'){
+            if(string[i] != '@'){
+                nStudent->info.birthDate[j] = string[i];
+                j++;
+                i++;
+            }else
+                nStudent->info.birthDate[j] = '\0';
+        }
         
-        if(string[i] != '#'){
-            es.nome[j] = string[i];
-            j++;
-            i++;
-        }else
-            es.nome[j] = '\0';
-
-        j=0;
-        if(string[i] != '@'){
-            es.birthDate[j] = string[i];
-            j++;
-            i++;
-        }else
-            es.birthDate[j] = '\0';
-        j=0;
-
         //Sai do Loop quando não econtra mais disciplinas
+        j=0;
         do{
             while(string[i] != '#'){
-                ed.nome[j] = string[i];
-                i++;
-                j++;
+                if(string[i] != '#'){
+                    nStudent->ld->first->info.nome[j] = string[i];
+                    i++;
+                    j++;
+                }else
+                    nStudent->ld->first->info.nome[j] = '\0';
             }
 
             j=0;
             while(string[i] != '#'){
-                ea.nomeAv[j] = string[i];
+                if(string[i] != '#'){
+                    nStudent->ld->first->la->first->info.nomeAv[j] = string[i];
+                    i++;
+                    j++;
+                }else
+                    nStudent->ld->first->la->first->info.nomeAv[j] = '\0';
             }
 
             j=0;
             while(string[i] != '#'){
-                value[j] = string[i];
-                i++;
-                j++;
+                    value[j] = string[i];
+                    i++;
+                    j++;
             }
-            ed.value = atoi(value);
+            nStudent->ld->first->info.value = atoi(value);
 
             j=0;
             while(string[i] != "@" || string[i] != '\n'){
-                value[j] = string[i];
-                i++;
-                j++;
+                    value[j] = string[i];
+                    i++;
+                    j++;
             }
-            ed.note = atoi(value);
+            nStudent->ld->first->info.note = atoi(value);
 
         }while(string[i] != '\n');
 
