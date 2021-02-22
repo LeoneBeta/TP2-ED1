@@ -1,62 +1,61 @@
 #ifndef LIST_H_INCLUDED
 #define LIST_H_INCLUDED
 
-//Lista para armazenar os alunos
-typedef int TMatricula;
-typedef struct{
-    TMatricula id;
-    char nome[100];
-    char birthDate[11];
-    struct listDisc *ld;
-}TElementStudent;
-
-typedef struct NodoStudent{
-    TElementStudent info;
-    struct NodoStudent *prior, *next;
-}TNodoStudent;
-
-typedef struct{
-    TNodoStudent *first, *last;
-    int size;
-}TListSudent;
-typedef TListSudent *listStudent;
-
-
-//Lista para armazenar as disciplinas
-typedef struct{
-    char nome[20];
-    struct listAv *la;
-}TElementDisc;
-
-typedef struct NodoDisc{
-    TElementDisc info;
-    struct NodoDisc *prior, *next;
-}TNodoDisc;
-
-typedef struct{
-    TNodoDisc *first, *last;
-    int size;
-}TListDisc;
-typedef TListDisc *listDisc;
-
-
-//Lista para armazenar as avaliações
-typedef struct{
+typedef struct{  //Elemento Avaliação
     char nomeAv[20];
     int value;
     int note;
 }TElementAv;
 
-typedef struct NodoAv{
+typedef struct NodoAv{  //Nodo Avaliação
     TElementAv info;
     struct NodoAv *prior, *next;
 }TNodoAv;
 
-typedef struct{
+typedef struct{  //Lista Avaliação
     TNodoAv *first, *last;
     int size;
 }TListAv;
+
+
+typedef struct{  //Elemento Disciplina
+    char nome[20];
+    TListAv *la;
+}TElementDisc;
+
+typedef struct NodoDisc{  //Nodo Disciplina
+    TElementDisc info;
+    struct NodoDisc *prior, *next;
+}TNodoDisc;
+
+typedef struct{  //Lista Disciplina
+    TNodoDisc *first, *last;
+    int size;
+}TListDisc;
+
+
+typedef int TMatricula;
+typedef struct{ //Elemento Aluno
+    TMatricula id;
+    char nome[100];
+    char birthDate[11];
+    TListDisc *ld;
+}TElementStudent;
+
+typedef struct NodoStudent{  //Nodo Alunos
+    TElementStudent info;
+    struct NodoStudent *prior, *next;
+}TNodoStudent;
+
+typedef struct{  //Lista Aluno
+    TNodoStudent *first, *last;
+    int size;
+}TListSudent;
+
+//Ponteiro para tipo struct
 typedef TListAv *listAv;
+typedef TListDisc *listDisc;
+typedef TListSudent *listStudent;
 
 listStudent creatListStudent();
 listDisc creatListDisc();

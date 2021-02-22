@@ -5,7 +5,8 @@
 #include "list.h"
 #include "utilities.h"
 
-void loadFile(FILE *Arqv){
+//Carrega os dados do arquivo para as listas geradas
+void loadFile(FILE *Arqv, listStudent lStudent){
     char string[500], value[2], mat[10];
     int i=0,j=0;
 
@@ -13,18 +14,13 @@ void loadFile(FILE *Arqv){
     TElementDisc eDisc;
     TElementAv eAv;
 
-    listStudent lStudent;
-
     openFile(&Arqv);
-
-    lStudent = creatListStudent();
-
-    if(lStudent == NULL)
-        printf("\nErro ao criar a Lista de Alunos");
-
 
     /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
     fseek(Arqv,0,SEEK_SET);
+
+    //Criar um loop para percorerr o arquivo, saindo dele quando os dados do arquivo de texto terminarem
+
     
     //Loop para percorrer a string retirada do arquivo, quando encontrar o '\n' ele retorna ao inicio e
     //passa para o proximo aluno
@@ -108,18 +104,20 @@ void loadFile(FILE *Arqv){
                 i++;
                 j = 0;
                 
-
                 //Resolver o problema de Inserir um novo elemento na lista Avaliação
-                // insertEndAv(lStudent->last->info.ld->last->info.la,eAv);
+                //insertEndAv(lStudent->last->info.ld->last->info.la,eAv);
 
             }while(string[i] == '#');
-
         }while(string[i] == '@');
 
+        //Coloca o ponteiro na ultima posição utilizada anteriormente na função fgets para coletar a string
+        //o posicionando para coletar a proxima string
         fseek(Arqv,0,SEEK_CUR);
     }while(string[i] != '\n');
 
     /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
+}
 
-
+void newStudent(listStudent listStudent){
+    
 }

@@ -38,7 +38,7 @@ int insertStartStudent(listStudent l, TElementStudent e){
     TNodoStudent *n;
     n = (TNodoStudent*)malloc(sizeof(TNodoStudent));
     if(n){
-        strcpy(n->info.id,e.id);
+        n->info.id = e.id;
         strcpy(n->info.nome,e.nome);
         strcpy(n->info.birthDate,e.birthDate);
         n->info.ld = creatListDisc();
@@ -75,8 +75,8 @@ int insertStartAv(listAv l,TElementAv e){
     n = (TNodoAv*)malloc(sizeof(TNodoAv));
     if(n){
         strcpy(n->info.nomeAv,e.nomeAv);
-        strcpy(n->info.value,e.value);
-        strcpy(n->info.note,e.note);
+        n->info.value = e.value;
+        n->info.note = e.note;
 
         if(l->first)
             l->first->prior = n;
@@ -95,7 +95,7 @@ int insertEndStudent(listStudent l, TElementStudent e){
         return insertStartStudent(l,e);
     n = (TNodoStudent*)malloc(sizeof(TNodoStudent));
     if(n){
-        strcpy(n->info.id,e.id);
+        n->info.id = e.id;
         strcpy(n->info.nome,e.nome);
         strcpy(n->info.birthDate,e.birthDate);
         n->info.ld = creatListDisc();
@@ -134,8 +134,8 @@ int insertEndAv(listAv l, TElementAv e){
     n = (TNodoAv*)malloc(sizeof(TNodoAv));
     if(n){
         strcpy(n->info.nomeAv,e.nomeAv);
-        strcpy(n->info.value,e.value);
-        strcpy(n->info.note,e.note);
+        n->info.value = e.value;
+        n->info.note = e.note;
 
         n->next = NULL;
         n->prior = l->last;
@@ -164,7 +164,7 @@ int insertPositionStudent(listStudent l, TElementStudent e, int position){
                 if(!n)
                     return 0;
 
-                strcpy(n->info.id,e.id);
+                n->info.id = e.id;
                 strcpy(n->info.nome,e.nome);
                 strcpy(n->info.birthDate,e.birthDate);
                 n->info.ld = creatListDisc();
@@ -229,8 +229,8 @@ int insertPositionAv(listAv l, TElementAv e, int position){
                     return 0;
                 
                 strcpy(n->info.nomeAv,e.nomeAv);
-                strcpy(n->info.value,e.value);
-                strcpy(n->info.note,e.note);
+                n->info.value = e.value;
+                n->info.note = e.note;
                 
                 nAux = l->first;
                 for(i=1;i<position;i++)
@@ -265,7 +265,7 @@ int removeElementStudent(listStudent l,TElementStudent *e, TMatricula mat){
                         n->next->prior = n->prior;
                     }
                     *e = n->info;
-                    //deleteListDisc(n->ld);
+                    deleteListDisc(n->info.ld);
                     free(n);
                     return 1;
         }else
@@ -294,7 +294,7 @@ int removeElementDisc(listDisc l,TElementDisc *e, char nome[]){
                         n->next->prior = n->prior;
                     }
                     *e = n->info;
-                    //deleteListAv(n->la);
+                    deleteListAv(n->info.la);
                     free(n);
                     return 1;
         }else
@@ -336,7 +336,7 @@ int deleteListStudent(listStudent l){
     while(l->first){
         n = l->first;
         l->first = l->first->next;
-        //deleteListDisc(n->ld);
+        deleteListDisc(n->info.ld);
         free(n);
     }
     free(l);
@@ -346,7 +346,7 @@ int deleteListDisc(listDisc l){
     while(l->first){
         n = l->first;
         l->first = l->first->next;
-        //deleteListAv(n->la);
+        deleteListAv(n->info.la);
         free(n);
     }
     free(l);
