@@ -9,103 +9,117 @@ void loadFile(FILE *Arqv){
     char string[500], value[2], mat[10];
     int i=0,j=0;
 
-    TNodoStudent *nStudent;
-    TNodoDisc *nDisc;
-    TNodoAv *nAv;
+    TElementStudent eStudent;
+    TElementDisc eDisc;
+    TElementAv eAv;
 
-    listStudent lstudent;
+    listStudent lStudent;
 
     openFile(&Arqv);
 
-    nStudent = (TNodoStudent*)malloc(sizeof(TNodoStudent));
-    lstudent = creatListStudent();
+    lStudent = creatListStudent();
 
-    if(lstudent == NULL)
+    if(lStudent == NULL)
         printf("\nErro ao criar a Lista de Alunos");
 
 
     /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
-    
     fseek(Arqv,0,SEEK_SET);
-    while(fgets(string,500,Arqv)){
+    
+    //Loop para percorrer a string retirada do arquivo, quando encontrar o '\n' ele retorna ao inicio e
+    //passa para o proximo aluno
+    do{
+        j = 0;
+        fgets(string,500,Arqv);
         while(string[i] != '#'){
-            if(string[1 != '#']){
-                mat[j] = string[i];
-            j++;
+        mat[j] = string[i];
+        i++;
+        j++;
+        }
+        mat[j] = '\0';
+        eStudent.id = atoi(mat);
+        i++;
+        j = 0;
+
+        while(string[i] != '#'){
+            eStudent.nome[j] = string[i];
             i++;
-            }else
-                mat[j] = string[i];
-            nStudent->info.id = atoi(mat);
+            j++;
         }
+        eStudent.nome[j] = '\0';
+        i++;
+        j = 0;
 
-        j=0;
         while(string[i] != '#'){
-            if(string[i] != '#'){
-                nStudent->info.nome[j] = string[i];
-                j++;
-                i++;
-            }else
-                nStudent->info.nome[j] = '\0';
+            eStudent.birthDate[j] = string[i];
+            i++;
+            j++;
         }
+        eStudent.birthDate[j] = '\0';
+        i++;
+        j = 0;
 
-        j=0;
-        while(string[i] != '#'){
-            if(string[i] != '@'){
-                nStudent->info.birthDate[j] = string[i];
-                j++;
-                i++;
-            }else
-                nStudent->info.birthDate[j] = '\0';
-        }
-        
-        //Sai do Loop quando não econtra mais disciplinas
-        j=0;
-        do{
+        insertEndStudent(lStudent,eStudent);
+
+        //Loop que percorre as disciplinas da string, se encontrar um @ ao final da coleta dos dados
+        //ele retorna armazenando outra disciplina.
+        do{ 
             while(string[i] != '#'){
-                if(string[i] != '#'){
-                    nDisc->info.nome[j] = string[i];
+                eDisc.nome[j] = string[i];
+                i++;
+                j++;
+            }
+            eDisc.nome[j] = string[i];
+            i++;
+            j = 0;
+
+            insertEndDisc(lStudent->last->info.ld,eDisc);
+
+            //Loop armazenando as avaliações, no final da coleta ele verifica se exite um '@' ou '#'
+            //caso encontre um '#', quer dizer que existe outra avaliação a ser coletada
+            do{
+                
+                while(string[i] != '#'){
+                    eAv.nomeAv[j] = string[i];
                     i++;
                     j++;
-                }else
-                    nDisc->info.nome[j] = '\0';
-            }
+                }
+                eAv.nomeAv[j] = '\0';
+                i++;
+                j = 0;
 
-            j=0;
-            while(string[i] != '#'){
-                if(string[i] != '#'){
-                    nAv->info.nomeAv[j] = string[i];
-                    i++;
-                    j++;
-                }else
-                    nAv->info.nomeAv[j] = '\0';
-            }
-
-            j=0;
-            while(string[i] != '#'){
+                while(string[i] != '#'){
                     value[j] = string[i];
                     i++;
                     j++;
-            }
-            nDisc->info.value = atoi(value);
+                }
+                value[j] = '\0';
+                eAv.value = atoi(value);
+                i++;
+                j = 0;
 
-            j=0;
-            while(string[i] != '@' || string[i] != '\n'){
+                while(string[i] != '#'){
                     value[j] = string[i];
                     i++;
                     j++;
-            }
-            nDisc->info.note = atoi(value);
+                }
+                value[j] = '\0';
+                eAv.note = atoi(value);
+                i++;
+                j = 0;
+                
 
-        printf("Matricula: %d", nStudent->info.id);
-        printf("Nome do Aluno: %s", nStudent->info.nome);
-        printf("Data de Nascimento: %s", nStudent->info.birthDate);
+                //Resolver o problema de Inserir um novo elemento na lista Avaliação
+                // insertEndAv(lStudent->last->info.ld->last->info.la,eAv);
 
-        }while(string[i] != '\n');
+            }while(string[i] == '#');
 
-        /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
+        }while(string[i] == '@');
 
-
-        
         fseek(Arqv,0,SEEK_CUR);
-    }
+    }while(string[i] != '\n');
+
+    /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
+
+
 }

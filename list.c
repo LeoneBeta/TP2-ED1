@@ -38,16 +38,17 @@ int insertStartStudent(listStudent l, TElementStudent e){
     TNodoStudent *n;
     n = (TNodoStudent*)malloc(sizeof(TNodoStudent));
     if(n){
-        n->info = e;
-        n->next = l->first;
-        n->prior = NULL;
+        strcpy(n->info.id,e.id);
+        strcpy(n->info.nome,e.nome);
+        strcpy(n->info.birthDate,e.birthDate);
+        n->info.ld = creatListDisc();
+
         if(l->first)
             l->first->prior = n;
         else
             l->last = n;
         l->first = n;
         l->size++;
-        creatListDisc(n->ld);
         return 1;
     }else
         return 0;
@@ -56,16 +57,15 @@ int insertStartDisc(listDisc l,TElementDisc e){
     TNodoDisc *n;
     n = (TNodoDisc*)malloc(sizeof(TNodoDisc));
     if(n){
-        n->info = e;
-        n->next = l->first;
-        n->prior = NULL;
+        strcpy(n->info.nome,e.nome);
+        n->info.la = creatListAv();
+
         if(l->first)
             l->first->prior = n;
         else
             l->last = n;
         l->first = n;
         l->size++;
-        creatListAv(n->la);
         return 1;
     }else
         return 0;
@@ -74,9 +74,10 @@ int insertStartAv(listAv l,TElementAv e){
     TNodoAv *n;
     n = (TNodoAv*)malloc(sizeof(TNodoAv));
     if(n){
-        n->info = e;
-        n->next = l->first;
-        n->prior = NULL;
+        strcpy(n->info.nomeAv,e.nomeAv);
+        strcpy(n->info.value,e.value);
+        strcpy(n->info.note,e.note);
+
         if(l->first)
             l->first->prior = n;
         else
@@ -94,13 +95,16 @@ int insertEndStudent(listStudent l, TElementStudent e){
         return insertStartStudent(l,e);
     n = (TNodoStudent*)malloc(sizeof(TNodoStudent));
     if(n){
-        n->info = e;
+        strcpy(n->info.id,e.id);
+        strcpy(n->info.nome,e.nome);
+        strcpy(n->info.birthDate,e.birthDate);
+        n->info.ld = creatListDisc();
+
         n->next = NULL;
         n->prior = l->last;
         l->last->next = n;
         l->last = n;
         l->size++;
-        creatListDisc(n->ld);
         return 1;
     }else
         return 0;
@@ -111,13 +115,14 @@ int insertEndDisc(listDisc l, TElementDisc e){
         return insertStartDisc(l,e);
     n = (TNodoDisc*)malloc(sizeof(TNodoDisc));
     if(n){
-        n->info = e;
+        strcpy(n->info.nome,e.nome);
+        n->info.la = creatListAv();
+
         n->next = NULL;
         n->prior = l->last;
         l->last->next = n;
         l->last = n;
         l->size++;
-        creatListAv(n->la);
         return 1;
     }else
         return 0;
@@ -128,7 +133,10 @@ int insertEndAv(listAv l, TElementAv e){
         return insertStartAv(l,e);
     n = (TNodoAv*)malloc(sizeof(TNodoAv));
     if(n){
-        n->info = e;
+        strcpy(n->info.nomeAv,e.nomeAv);
+        strcpy(n->info.value,e.value);
+        strcpy(n->info.note,e.note);
+
         n->next = NULL;
         n->prior = l->last;
         l->last->next = n;
@@ -155,7 +163,12 @@ int insertPositionStudent(listStudent l, TElementStudent e, int position){
                 n = (TNodoStudent*)malloc(sizeof(TNodoStudent));
                 if(!n)
                     return 0;
-                n->info = e;
+
+                strcpy(n->info.id,e.id);
+                strcpy(n->info.nome,e.nome);
+                strcpy(n->info.birthDate,e.birthDate);
+                n->info.ld = creatListDisc();
+
                 nAux = l->first;
                 for(i=1;i<position;i++)
                     nAux = nAux->next;
@@ -164,7 +177,6 @@ int insertPositionStudent(listStudent l, TElementStudent e, int position){
                 nAux->prior->next = n;
                 nAux->prior = n;
                 l->size++;
-                creatListDisc(n->ld);
                 return 1;
             }
 }
@@ -184,7 +196,10 @@ int insertPositionDisc(listDisc l, TElementDisc e, int position){
                 n = (TNodoDisc*)malloc(sizeof(TNodoDisc));
                 if(!n)
                     return 0;
-                n->info = e;
+               
+                strcpy(n->info.nome,e.nome);
+                n->info.la = creatListAv();
+                
                 nAux = l->first;
                 for(i=1;i<position;i++)
                     nAux = nAux->next;
@@ -193,7 +208,6 @@ int insertPositionDisc(listDisc l, TElementDisc e, int position){
                 nAux->prior->next = n;
                 nAux->prior = n;
                 l->size++;
-                creatListAv(n->la);
                 return 1;
             }
 }
@@ -213,7 +227,11 @@ int insertPositionAv(listAv l, TElementAv e, int position){
                 n = (TNodoAv*)malloc(sizeof(TNodoAv));
                 if(!n)
                     return 0;
-                n->info = e;
+                
+                strcpy(n->info.nomeAv,e.nomeAv);
+                strcpy(n->info.value,e.value);
+                strcpy(n->info.note,e.note);
+                
                 nAux = l->first;
                 for(i=1;i<position;i++)
                     nAux = nAux->next;
