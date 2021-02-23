@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "dataMaintenance.h"
 #include "list.h"
 #include "utilities.h"
+#include "dataMaintenance.h"
 
 //Carrega os dados do arquivo para as listas geradas
 void loadFile(FILE *Arqv, listStudent lStudent){
