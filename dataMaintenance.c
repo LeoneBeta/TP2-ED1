@@ -488,3 +488,12 @@ void removeAv(listStudent lStudent){
         removeEnter(menu);
     }while(menu[0] != '1');
 }
+
+//Printa os alunos Aprovados                                    /* 9 */
+void approvedStudents(listStudent lStudent){
+
+}
+//Ṕrinta os alunos Reprovados                                   /* 10 */
+void failedStudents(listStudent lStudent){
+
+}

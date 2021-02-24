@@ -41,10 +41,10 @@ int main(){
         fgets(menu,3,stdin);
         removeEnter(menu);
 
-        if(menu[0] == '1'){loadFile(Arqv,lStudent);}
+        if(menu[0] == '1' && menu[1] == '\0'){loadFile(Arqv,lStudent);}
         if(menu[0] == '2'){newStudent(lStudent);}
-        if(menu[0] == '3'){}
-        if(menu[0] == '4'){}
+        if(menu[0] == '3'){newDisc(lStudent);}
+        if(menu[0] == '4'){newAv(lStudent);}
         if(menu[0] == '5'){}
         if(menu[0] == '6'){removeStudent(lStudent);}
         if(menu[0] == '7'){removeDisc(lStudent);}
