@@ -401,7 +401,7 @@ void removeDisc(listStudent lStudent){
         do{
             setbuf(stdin,NULL);
             printf("\nForneça o nome da Disciplina");
-            fets(nomeDisc,50,stdin);
+            fgets(nomeDisc,50,stdin);
             removeEnter(nomeDisc);
             textConverter(nomeDisc);
 
@@ -447,7 +447,7 @@ void removeAv(listStudent lStudent){
         do{
             setbuf(stdin,NULL);
             printf("\nForneça o nome da Disciplina");
-            fets(nomeDisc,50,stdin);
+            fgets(nomeDisc,50,stdin);
             removeEnter(nomeDisc);
             textConverter(nomeDisc);
 
@@ -459,7 +459,7 @@ void removeAv(listStudent lStudent){
         do{
             setbuf(stdin,NULL);
             printf("\nForneça o nome da Avaliação");
-            fets(nomeAv,50,stdin);
+            fgets(nomeAv,50,stdin);
             removeEnter(nomeAv);
             textConverter(nomeAv);
 
@@ -581,8 +581,8 @@ void printList(listStudent lStudent){
         lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
         for(j=0;j<sizeListAv;i++){
             printf("Avaliação: %s",lStudent->current->info.ld->current->info.la->current->info.nomeAv);
-            printf("Valor: %s",lStudent->current->info.ld->current->info.la->current->info.value);
-            printf("Nota: %s",lStudent->current->info.ld->current->info.la->current->info.note);
+            printf("Valor: %d",lStudent->current->info.ld->current->info.la->current->info.value);
+            printf("Nota: %d",lStudent->current->info.ld->current->info.la->current->info.note);
             
             //Ponteiro Current da lista Av. passa a apontar para o proximo nodo da lista Avaliação
             lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;

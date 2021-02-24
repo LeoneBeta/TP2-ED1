@@ -11,7 +11,7 @@ void removeStudent(listStudent);
 void removeDisc(listStudent);
 void removeAv(listStudent);
 
-void approvedStudents(listStudent);                                 /* 10 */
+void approvedStudents(listStudent);
 void failedStudents(listStudent);
 
 void consultRegistration(listStudent);
