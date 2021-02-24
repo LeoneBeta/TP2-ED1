@@ -52,8 +52,8 @@ int main(){
         if(menu[0] == '9'){}
         if(menu[0] == '1' && menu[1] == '0'){}
         if(menu[0] == '1' && menu[1] == '1'){}
-        if(menu[0] == '1' && menu[1] == '2'){}
-        if(menu[0] == '1' && menu[1] == '3'){}
+        if(menu[0] == '1' && menu[1] == '2'){consultRegistration(lStudent);}
+        if(menu[0] == '1' && menu[1] == '3'){consultName(lStudent);}
         if(menu[0] == '1' && menu[1] == '4'){}
 
     }while(menu[0] != '0');

@@ -497,3 +497,97 @@ void approvedStudents(listStudent lStudent){
 void failedStudents(listStudent lStudent){
 
 }
+
+//Consulta Alunos por Matricula                                 /* 12 */
+void consultRegistration(listStudent lStudent){
+    char menu[2];
+    int mat, val, i, j;
+
+    do{
+        do{
+            printf("\nForneça a Matricula");
+            scanf("%d",&mat);
+            //verifica se a matricula existe
+            val = setCurrentStudent(lStudent,mat);
+            if(val == 0)
+                printf("\nMatricula Inválida");
+        }while(val == 0);
+
+        printList(lStudent);
+
+        setbuf(stdin,NULL);
+        printf("\nDeseja Consultar outro Aluno");
+        printf("\n0 - Sim ... 1 - Não ");
+        fgets(menu,2,stdin);
+        removeEnter(menu);
+    }while(menu[0] != '1');
+}
+//Consulta Alunos por Nome                                      /* 13 */
+void consultName(listStudent lStudent){
+    char menu[2], pref[5];
+    int val = 0, i, j, sizeListStudent;
+
+    do{
+        do{
+            setbuf(stdin,NULL);
+            printf("\nForneça as 3 primeiras letras do Aluno");
+            fgets(pref,5,stdin);
+            removeEnter(pref);
+            textConverter(pref);
+
+            //Busca na lista Alunos o prefixo fornecido, caso não encontrar, printa um aviso e retorna a pedir
+            //um novo prefixo
+            sizeListStudent = lStudent->size;
+            lStudent->current = lStudent->first;
+            for(i=0;i<sizeListStudent;i++){
+                if(strncmp(lStudent->current->info.nome,pref,3) == 0){
+                    val = 1;
+                    break;
+                }else
+                    lStudent->current = lStudent->current->next;
+            }
+            if(val != 1)
+                printf("\nPrefixo não encontrado");
+        }while(val != 1);
+
+        printList(lStudent);
+
+        setbuf(stdin,NULL);
+        printf("\nDeseja Consultar outro Aluno");
+        printf("\n0 - Sim ... 1 - Não ");
+        fgets(menu,2,stdin);
+        removeEnter(menu);
+    }while(menu[0] != '1');
+}
+
+//Printa a consulta requerida
+void printList(listStudent lStudent){
+    int sizeListDisc, sizeListAv;
+    int i, j;
+
+    printf("\nMatrícula: %d",lStudent->current->info.id);
+    printf("\nNome: %s",lStudent->current->info.nome);
+    printf("\nData de Nascimento: %s",lStudent->current->info.birthDate);
+
+    //Percorre a lista de disciplinas desse aluno
+    sizeListDisc = lStudent->current->info.ld->size ;
+    //Ponteiro Current apontar para o primeiro nodo da Lista Disc
+    lStudent->current->info.ld->current = lStudent->current->info.ld->first;
+    for(i=0;i<sizeListDisc;i++){
+        printf("\nDisciplina: %s", lStudent->current->info.ld->current->info.nome);
+        
+        //Ponteiro Current da lista Avaliação aponta para o primeiro Nodo da lista
+        sizeListAv = lStudent->current->info.ld->current->info.la->size;
+        lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
+        for(j=0;j<sizeListAv;i++){
+            printf("Avaliação: %s",lStudent->current->info.ld->current->info.la->current->info.nomeAv);
+            printf("Valor: %s",lStudent->current->info.ld->current->info.la->current->info.value);
+            printf("Nota: %s",lStudent->current->info.ld->current->info.la->current->info.note);
+            
+            //Ponteiro Current da lista Av. passa a apontar para o proximo nodo da lista Avaliação
+            lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
+        }
+        //Ponteiro Current da lista Disc. passa a apontar para o proximo nodo da lista Disc
+        lStudent->current->info.ld->current = lStudent->current->info.ld->current->next;
+    }
+}
