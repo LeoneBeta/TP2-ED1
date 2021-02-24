@@ -18,15 +18,11 @@ void loadFile(FILE *Arqv, listStudent lStudent){
 
     /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
     fseek(Arqv,0,SEEK_SET);
+    //Loop percorrendo o arquivo, verificando se o mesmo chegou no fim.
+    while(fgets(string,500,Arqv)){
+        printf("\n%s",string);
 
-    //Criar um loop para percorerr o arquivo, saindo dele quando os dados do arquivo de texto terminarem
-
-    
-    //Loop para percorrer a string retirada do arquivo, quando encontrar o '\n' ele retorna ao inicio e
-    //passa para o proximo aluno
-    do{
         j = 0;
-        fgets(string,500,Arqv);
         while(string[i] != '#'){
         mat[j] = string[i];
         i++;
@@ -113,8 +109,8 @@ void loadFile(FILE *Arqv, listStudent lStudent){
         //Coloca o ponteiro na ultima posição utilizada anteriormente na função fgets para coletar a string
         //o posicionando para coletar a proxima string
         fseek(Arqv,0,SEEK_CUR);
-    }while(string[i] != '\n');
-
+    }
+    
     /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
 }
 

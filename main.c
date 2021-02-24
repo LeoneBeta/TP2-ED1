@@ -56,6 +56,6 @@ int main(){
         if(menu[0] == '1' && menu[1] == '3'){}
         if(menu[0] == '1' && menu[1] == '4'){}
 
-    }while(menu[0] != 0);
+    }while(menu[0] != '0');
     return 0;
 }
