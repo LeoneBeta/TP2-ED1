@@ -39,16 +39,16 @@ int main(){
         printf("\n~~ 0 - Sair ~~~~~~~~~~~~~~~~~~~~~");
         printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         fgets(menu,3,stdin);
-        retiraEnter(menu);
+        removeEnter(menu);
 
         if(menu[0] == '1'){loadFile(Arqv,lStudent);}
         if(menu[0] == '2'){newStudent(lStudent);}
         if(menu[0] == '3'){}
         if(menu[0] == '4'){}
         if(menu[0] == '5'){}
-        if(menu[0] == '6'){}
-        if(menu[0] == '7'){}
-        if(menu[0] == '8'){}
+        if(menu[0] == '6'){removeStudent(lStudent);}
+        if(menu[0] == '7'){removeDisc(lStudent);}
+        if(menu[0] == '8'){removeAv(lStudent);}
         if(menu[0] == '9'){}
         if(menu[0] == '1' && menu[1] == '0'){}
         if(menu[0] == '1' && menu[1] == '1'){}

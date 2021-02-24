@@ -12,6 +12,7 @@ listStudent creatListStudent(){
         l->size = 0;
         l->first = NULL;
         l->last = NULL;
+        l->current = NULL;
     }
     return l;
 }
@@ -21,6 +22,7 @@ listDisc creatListDisc(){
         l->size = 0;
         l->first = NULL;
         l->last = NULL;
+        l->current = NULL;
     }
     return l;
 }
@@ -30,6 +32,7 @@ listAv creatListAv(){
         l->size = 0;
         l->first = NULL;
         l->last = NULL;
+        l->current = NULL;
     }
     return l;
 }
@@ -244,7 +247,7 @@ int insertPositionAv(listAv l, TElementAv e, int position){
             }
 }
 
-int removeElementStudent(listStudent l,TElementStudent *e, TMatricula mat){
+int removeElementStudent(listStudent l, TMatricula mat){
     TNodoStudent *n;
     n = l->first;
     while(n){
@@ -264,7 +267,6 @@ int removeElementStudent(listStudent l,TElementStudent *e, TMatricula mat){
                         n->prior->next = n->next;
                         n->next->prior = n->prior;
                     }
-                    *e = n->info;
                     deleteListDisc(n->info.ld);
                     free(n);
                     return 1;
@@ -273,7 +275,7 @@ int removeElementStudent(listStudent l,TElementStudent *e, TMatricula mat){
     }
     return 0;
 }
-int removeElementDisc(listDisc l,TElementDisc *e, char nome[]){
+int removeElementDisc(listDisc l, char nome[]){
     TNodoDisc *n;
     n = l->first;
     while(n){
@@ -293,7 +295,6 @@ int removeElementDisc(listDisc l,TElementDisc *e, char nome[]){
                         n->prior->next = n->next;
                         n->next->prior = n->prior;
                     }
-                    *e = n->info;
                     deleteListAv(n->info.la);
                     free(n);
                     return 1;
@@ -302,7 +303,7 @@ int removeElementDisc(listDisc l,TElementDisc *e, char nome[]){
     }
     return 0;
 }
-int removeElementAv(listAv l,TElementAv *e, char nomeAv[]){
+int removeElementAv(listAv l, char nomeAv[]){
     TNodoAv *n;
     n = l->first;
     while(n){
@@ -322,7 +323,6 @@ int removeElementAv(listAv l,TElementAv *e, char nomeAv[]){
                         n->prior->next = n->next;
                         n->next->prior = n->prior;
                     }
-                    *e = n->info;
                     free(n);
                     return 1;
         }else
@@ -458,8 +458,44 @@ int getSizeAv(listAv l){
     return l->size;
 }
 
+int setCurrentStudent(listStudent l, int position){
+    int i;
+    if(position < 1 | position > l->size)
+        return 0;
+    if(position < l->size/2){
+        l->current = l->first;
+        for(i=1;i<position;i++)
+            l->current = l->current->next;
+    }else{
+        l->current = l->last;
+        for(i=l->size;i>position;i--)
+            l->current = l->current->prior;
+    }
+    return 1;
+}
+int setCurrentDisc(listDisc l, char string[]){
+    int i;
+    l->current = l->first;
 
+    for(i=0;i<l->size;i++)
+        if(strcmp(string,l->current->info.nome) == 0)
+            return 1;
+        else
+            l->current = l->current->next;
+    return 0;
+    
+}
+int setCurrentAv(listAv l, char string[]){
+    int i;
+    l->current = l->first;
 
+    for(i=0;i<l->size;i++)
+        if(strcmp(string,l->current->info.nomeAv) == 0)
+            return 1;
+        else
+            l->current = l->current->next;
+    return 0;
+}
 
 
 

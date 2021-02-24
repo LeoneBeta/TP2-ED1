@@ -13,7 +13,7 @@ typedef struct NodoAv{  //Nodo Avaliação
 }TNodoAv;
 
 typedef struct{  //Lista Avaliação
-    TNodoAv *first, *last;
+    TNodoAv *first, *last, *current;
     int size;
 }TListAv;
 
@@ -29,7 +29,7 @@ typedef struct NodoDisc{  //Nodo Disciplina
 }TNodoDisc;
 
 typedef struct{  //Lista Disciplina
-    TNodoDisc *first, *last;
+    TNodoDisc *first, *last, *current;
     int size;
 }TListDisc;
 
@@ -48,7 +48,7 @@ typedef struct NodoStudent{  //Nodo Alunos
 }TNodoStudent;
 
 typedef struct{  //Lista Aluno
-    TNodoStudent *first, *last;
+    TNodoStudent *first, *last, *current;
     int size;
 }TListSudent;
 
@@ -73,9 +73,9 @@ int insertPositionStudent(listStudent,TElementStudent,int);
 int insertPositionDisc(listDisc,TElementDisc,int);
 int insertPositionAv(listAv,TElementAv,int);
 
-int removeElementStudent(listStudent,TElementStudent *,TMatricula);
-int removeElementDisc(listDisc,TElementDisc *,char []);
-int removeElementAv(listAv,TElementAv *,char []);
+int removeElementStudent(listStudent,TMatricula);
+int removeElementDisc(listDisc,char []);
+int removeElementAv(listAv,char []);
 
 int deleteListStudent(listStudent);
 int deleteListDisc(listDisc);
@@ -97,5 +97,8 @@ int getSizeStudent(listStudent);
 int getSizeDisc(listDisc);
 int getSizeAv(listAv);
 
+int setCurrentStudent(listStudent,int);
+int setCurrentDisc(listDisc,char []);
+int setCurrentAv(listAv, char[]);
 
 #endif

@@ -4,6 +4,7 @@
 
 void openFile(FILE **);
 void closeFile(FILE **);
-void retiraEnter(char []);
+void removeEnter(char []);
+void textConverter(char []);
 
 #endif

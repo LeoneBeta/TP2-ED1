@@ -4,6 +4,10 @@
 void loadFile(FILE *, listStudent);
 void newStudent(listStudent);
 
+void removeStudent(listStudent);
+void removeDisc(listStudent);
+void removeAv(listStudent);
+
 
 
 #endif
