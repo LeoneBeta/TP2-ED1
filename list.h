@@ -82,8 +82,8 @@ int deleteListDisc(listDisc);
 int deleteListAv(listAv);
 
 int getElementStudent(listStudent,TElementStudent *,int);
-int getElementDisc(listDisc,TElementDisc *,int);
-int getElementAv(listAv,TElementAv *,int);
+int getElementDisc(listDisc,TElementDisc *,char []);
+int getElementAv(listAv,TElementAv *,char []);
 
 int emptyListStudent(listStudent );
 int emptyListDisc(listDisc);

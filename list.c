@@ -370,44 +370,41 @@ int getElementStudent(listStudent l, TElementStudent *e, int position){
         for(i=1;i<position;i++)
             n = n->next;
         *e = n->info;
+        return 1;
     }else{
         for(i=l->size;i>position;i--)
             n = n->prior;
         *e = n->info;
+        return 1;
     }
-    return 1;
+    return 0;
 }
-int getElementDisc(listDisc l, TElementDisc *e, int position){
+int getElementDisc(listDisc l, TElementDisc *e, char nomeDisc[]){
     int i;
     TNodoDisc *n;
-    if(position < 1 || position > l->size)
-        return 0;
-    if(position <= l->size/2){
-        for(i=1;i<position;i++)
-            n = n->next;
-        *e = n->info;
-    }else{
-        for(i=l->size;i>position;i--)
-            n = n->prior;
-        *e = n->info;
+
+    for(i=0;i<l->size;i++){
+        for(i=0;i<l->size;i++)
+        if(strcmp(nomeDisc,l->current->info.nome) == 0){
+            *e = n->info;
+            return 1;
+        }else
+            l->current = l->current->next;
     }
-    return 1;
+    return 0;
 }
-int getElementAv(listAv l, TElementAv *e, int position){
+int getElementAv(listAv l, TElementAv *e, char nomeAv[]){
     int i;
     TNodoAv *n;
-    if(position < 1 || position > l->size)
-        return 0;
-    if(position <= l->size/2){
-        for(i=1;i<position;i++)
-            n = n->next;
-        *e = n->info;
-    }else{
-        for(i=l->size;i>position;i--)
-            n = n->prior;
-        *e = n->info;
+    for(i=0;i<l->size;i++){
+        for(i=0;i<l->size;i++)
+        if(strcmp(nomeAv,l->current->info.nomeAv) == 0){
+            *e = n->info;
+            return 1;
+        }else
+            l->current = l->current->next;
     }
-    return 1;
+    return 0;
 }
 
 int emptyListStudent(listStudent l){
@@ -464,14 +461,20 @@ int setCurrentStudent(listStudent l, int position){
         return 0;
     if(position < l->size/2){
         l->current = l->first;
-        for(i=1;i<position;i++)
+        for(i=1;i<position;i++){
             l->current = l->current->next;
+            if(l->current->info.id == position)
+                return 1;
+        }
     }else{
         l->current = l->last;
-        for(i=l->size;i>position;i--)
+        for(i=l->size;i>position;i--){
             l->current = l->current->prior;
+            if(l->current->info.id == position)
+                return 1;
+        }
     }
-    return 1;
+    return 0;
 }
 int setCurrentDisc(listDisc l, char string[]){
     int i;

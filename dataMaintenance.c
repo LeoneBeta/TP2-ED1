@@ -5,7 +5,7 @@
 #include "utilities.h"
 #include "dataMaintenance.h"
 
-//Carrega os dados do arquivo para as listas geradas /* 1 */
+//Carrega os dados do arquivo para as listas geradas            /* 1 */
 void loadFile(FILE *Arqv, listStudent lStudent){
     char string[500], value[2], mat[10];
     int i=0,j=0;
@@ -115,27 +115,34 @@ void loadFile(FILE *Arqv, listStudent lStudent){
     }
     closeFile(&Arqv);
 }
-//Cadastrar um novo aluno /* 2 */
+
+//Cadastrar um novo aluno                                       /* 2 */
 void newStudent(listStudent lStudent){
     char menu[2], string[100];
-    int insert;
+    int insert, mat, val;
     TElementStudent eStudent;
     TElementDisc eDisc;
     TElementAv eAv;
 
     do{
-        printf("\nMatricula do Aluno: ");
-        scanf("%d", &insert);
-        eStudent.id = insert;
-
-        //verificação de a matricula ja existe
+        do{ //Validação da Matricula Fornecida
+            printf("\nMatricula do Aluno");
+            scanf("%d",&mat);
+            //verifica se a matricula existe
+            val = setCurrentStudent(lStudent,mat);
+            if(val == 1)
+                printf("\nMatricula já cadastrda");
+            else
+                break;
+        }while(val == 1);
+        eStudent.id = mat;
 
         setbuf(stdin,NULL);
         printf("\nNome do Aluno: ");
         fgets(string,100,stdin);
         removeEnter(string);
         textConverter(string);
-        //verificação se o nome ja existe
+
         strcpy(eStudent.nome,string);
 
         setbuf(stdin,NULL);
@@ -197,8 +204,150 @@ void newStudent(listStudent lStudent){
         removeEnter(menu);
     }while(menu[0] != '1');
 }
+//Cadastrar uma nova Disciplina para um Aluno                   /* 3 */
+void newDisc(listStudent lStudent){
+    char menu[2], string[100];
+    int insert, mat, val;
+    TElementDisc eDisc;
+    TElementAv eAv;
 
-//Remover um Aluno /* 6 */
+    do{
+        do{ //Validação da Matricula Fornecida
+            printf("\nMatricula do Aluno");
+            scanf("%d",&mat);
+            //verifica se a matricula existe
+            val = setCurrentStudent(lStudent,mat);
+            if(val == 0)
+                printf("\nMatrcula não encontrada");
+        }while(val == 0);
+
+        do{
+            do{ //Validação da Matricula Fornecida
+                setbuf(stdin,NULL);
+                printf("\nNome da Disciplina: ");
+                fgets(string,100,stdin);
+                removeEnter(string);
+                textConverter(string);
+
+                //Pega a posição da disciplina caso ja tenha uma cadastrada com esse nome
+                val = setCurrentDisc(lStudent->current->info.ld,string);
+                if(val == 1)
+                    printf("\nDisciplina já Cadastrada");
+            }while(val == 1);
+            strcpy(eDisc.nome,string);
+
+            insertEndDisc(lStudent->current->info.ld,eDisc);
+            
+            do{
+                setbuf(stdin,NULL);
+                printf("\nNome da Avaliação: ");
+                fgets(string,100,stdin);
+                removeEnter(string);
+                textConverter(string);
+                strcpy(eAv.nomeAv,string);
+
+                setbuf(stdin,NULL);
+                printf("\nValor da Avaliação: ");
+                scanf("%d",&eAv.value);
+
+                setbuf(stdin,NULL);
+                printf("\nNota da Avaliação: ");
+                scanf("%d",&eAv.note);
+
+                insertEndAv(lStudent->current->info.ld->last->info.la,eAv);
+
+                setbuf(stdin,NULL);
+                printf("\nDeseja cadastrar outra Avaliação");
+                printf("\n0 - Sim ... 1 - Não ");
+                fgets(menu,2,stdin);
+                removeEnter(menu);
+            }while(menu[0] != '1');
+
+            setbuf(stdin,NULL);
+            printf("\nDeseja cadastrar outra Disciplina");
+            printf("\n0 - Sim ... 1 - Não ");
+            fgets(menu,2,stdin);
+            removeEnter(menu);
+        }while(menu[0] != '1');
+
+        setbuf(stdin,NULL);
+        printf("\nDeseja cadastrar disciplina em outro aluno");
+        printf("\n0 - Sim ... 1 - Não ");
+        fgets(menu,2,stdin);
+        removeEnter(menu);
+    }while(menu[0] != '1');
+}
+//Cadastraruma nova avaliação numa disciplina de um aluno       /* 4 */
+void newAv(listStudent lStudent){
+    char menu[2], string[100];
+    int insert, mat, val;
+    TElementAv eAv;
+
+    do{
+        do{ //Validação da Matricula Fornecida
+            printf("\nMatricula do Aluno");
+            scanf("%d",&mat);
+            //verifica se a matricula existe
+            val = setCurrentStudent(lStudent,mat);
+            if(val == 0)
+                printf("\nMatrcula não encontrada");
+        }while(val == 0);
+
+        do{
+            do{ //Validação da Matricula Fornecida
+                setbuf(stdin,NULL);
+                printf("\nNome da Disciplina: ");
+                fgets(string,100,stdin);
+                removeEnter(string);
+                textConverter(string);
+
+                //Pega a posição da disciplina caso ja tenha uma cadastrada com esse nome
+                val = setCurrentDisc(lStudent->current->info.ld,string);
+                if(val == 0)
+                    printf("\nDisciplina não encontrada");
+            }while(val == 0);
+
+            do{
+                setbuf(stdin,NULL);
+                printf("\nNome da Avaliação: ");
+                fgets(string,100,stdin);
+                removeEnter(string);
+                textConverter(string);
+                strcpy(eAv.nomeAv,string);
+
+                setbuf(stdin,NULL);
+                printf("\nValor da Avaliação: ");
+                scanf("%d",&eAv.value);
+
+                setbuf(stdin,NULL);
+                printf("\nNota da Avaliação: ");
+                scanf("%d",&eAv.note);
+
+                insertEndAv(lStudent->current->info.ld->current->info.la,eAv);
+
+                setbuf(stdin,NULL);
+                printf("\nDeseja cadastrar outra Avaliação");
+                printf("\n0 - Sim ... 1 - Não ");
+                fgets(menu,2,stdin);
+                removeEnter(menu);
+            }while(menu[0] != '1');
+
+            setbuf(stdin,NULL);
+            printf("\nDeseja cadastrar Avaliação em outra Disciplina");
+            printf("\n0 - Sim ... 1 - Não ");
+            fgets(menu,2,stdin);
+            removeEnter(menu);
+        }while(menu[0] != '1');
+
+        setbuf(stdin,NULL);
+        printf("\nDeseja cadastrar em outro Aluno?");
+        printf("\n0 - Sim ... 1 - Não ");
+        fgets(menu,2,stdin);
+        removeEnter(menu);
+    }while(menu[0] != '1');
+}
+
+//Remover um Aluno                                              /* 6 */
 void removeStudent(listStudent lStudent){
     char menu[2];
     int mat, val;
@@ -234,7 +383,7 @@ void removeStudent(listStudent lStudent){
         removeEnter(menu);
     }while(menu[0] != '1');
 }
-//Remover uma disciplina de um Aluno /* 7 */
+//Remover uma disciplina de um Aluno                            /* 7 */
 void removeDisc(listStudent lStudent){
     char menu[2], nomeDisc[50];
     int mat, val;
@@ -280,7 +429,7 @@ void removeDisc(listStudent lStudent){
         removeEnter(menu);
     }while(menu[0] != '1');
 }
-//Remover uma avaliação de uma disciplina de um Aluno /* 8 */
+//Remover uma avaliação de uma disciplina de um Aluno           /* 8 */
 void removeAv(listStudent lStudent){
     char menu[2], nomeDisc[50], nomeAv[50];
     int mat, val;
