@@ -16,17 +16,15 @@ void loadFile(FILE *Arqv, listStudent lStudent){
 
     openFile(&Arqv);
 
-    /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
     fseek(Arqv,0,SEEK_SET);
     //Loop percorrendo o arquivo, verificando se o mesmo chegou no fim.
     while(fgets(string,500,Arqv)){
-        printf("\n%s",string);
-
+        i = 0;
         j = 0;
         while(string[i] != '#'){
-        mat[j] = string[i];
-        i++;
-        j++;
+            mat[j] = string[i];
+            i++;
+            j++;
         }
         mat[j] = '\0';
         eStudent.id = atoi(mat);
@@ -42,7 +40,7 @@ void loadFile(FILE *Arqv, listStudent lStudent){
         i++;
         j = 0;
 
-        while(string[i] != '#'){
+        while(string[i] != '@'){
             eStudent.birthDate[j] = string[i];
             i++;
             j++;
@@ -61,7 +59,7 @@ void loadFile(FILE *Arqv, listStudent lStudent){
                 i++;
                 j++;
             }
-            eDisc.nome[j] = string[i];
+            eDisc.nome[j] = '\0';
             i++;
             j = 0;
 
@@ -91,27 +89,31 @@ void loadFile(FILE *Arqv, listStudent lStudent){
                 j = 0;
 
                 while(string[i] != '#'){
+                    if(string[i] == '@' || string[i] == '\n')
+                        break;
                     value[j] = string[i];
                     i++;
                     j++;
                 }
                 value[j] = '\0';
                 eAv.note = atoi(value);
-                i++;
                 j = 0;
-                
-                //Resolver o problema de Inserir um novo elemento na lista Avaliação
-                //insertEndAv(lStudent->last->info.ld->last->info.la,eAv);
+                i++;
+                //Passando a lista avaliação do atual aluno
+                insertEndAv(lStudent->last->info.ld->last->info.la,eAv);
 
-            }while(string[i] == '#');
-        }while(string[i] == '@');
+                if(string[i-1] == '\n')
+                    break;
+            }while(string[i-1] == '#');
+            if(string[i-1] == '\n')
+                break;
+        }while(string[i-1] == '@');
 
         //Coloca o ponteiro na ultima posição utilizada anteriormente na função fgets para coletar a string
         //o posicionando para coletar a proxima string
         fseek(Arqv,0,SEEK_CUR);
     }
-    
-    /*~~~~~~~ EM DESENVOLVIMENTO ~~~~~~~~*/
+    closeFile(Arqv);
 }
 
 void newStudent(listStudent listStudent){
