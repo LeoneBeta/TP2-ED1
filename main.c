@@ -54,7 +54,7 @@ int main(){
         if(menu[0] == '1' && menu[1] == '1'){alterNote(lStudent);}
         if(menu[0] == '1' && menu[1] == '2'){consultRegistration(lStudent);}
         if(menu[0] == '1' && menu[1] == '3'){consultName(lStudent);}
-        if(menu[0] == '1' && menu[1] == '4'){}
+        if(menu[0] == '1' && menu[1] == '4'){writeToFile(Arqv,lStudent);}
 
     }while(menu[0] != '0');
     return 0;
