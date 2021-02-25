@@ -491,11 +491,121 @@ void removeAv(listStudent lStudent){
 
 //Printa os alunos Aprovados                                    /* 9 */
 void approvedStudents(listStudent lStudent){
+    int i, j, k, contDisc = 0;
+    int sizeListStudent, sizeListDisc, sizeListAv, sumAv = 0, aprove, average = 0;
 
+    printf("\nAlunos Aprovados");
+    printf("\nMatrícula\tNome\t\t\tData de Nascimento");
+
+    sizeListStudent = lStudent->size;
+    lStudent->current = lStudent->first;
+    for(i=0;i<sizeListStudent;i++){         //Percorrer a Lista Aluno
+        aprove = 1;
+        printf("\n%d\t%s\t\t\t%s",lStudent->current->info.id,lStudent->current->info.nome,lStudent->current->info.birthDate);
+
+        sizeListDisc = lStudent->current->info.ld->size;
+        lStudent->current->info.ld->current = lStudent->current->info.ld->first;
+        for(j=0;j<sizeListDisc;i++){        //Percorrer a Lista Disciplina do Aluno corrente
+
+            sizeListAv = lStudent->current->info.ld->current->info.la->size;
+            lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
+            for(k=0;k<sizeListAv;k++){      //Percorrer a Lista Avaliação da Disciplina corrente
+
+                sumAv += lStudent->current->info.ld->current->info.la->current->info.note;
+
+                lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
+            }
+            if(sumAv < 60){
+                aprove = 0;
+                break;
+            }
+            lStudent->current->info.ld->current = lStudent->current->info.ld->current->next;
+        }
+        //Se todas as disciplinas do Aluno corrente estiverem com nota acima de 60, ele printa as disciplinas
+        //e notas do aluno
+        if(aprove == 1){
+            sizeListDisc = lStudent->current->info.ld->size;
+            lStudent->current->info.ld->current = lStudent->current->info.ld->first;
+            for(j=0;j<sizeListDisc;i++){        //Percorrer a Lista Disciplina do Aluno corrente
+
+                sizeListAv = lStudent->current->info.ld->current->info.la->size;
+                lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
+                for(k=0;k<sizeListAv;k++){      //Percorrer a Lista Avaliação da Disciplina corrente
+                    
+                    sumAv += lStudent->current->info.ld->current->info.la->current->info.note;
+                    
+                    lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
+                }
+                //Printa a Disciplina corrente e a soma da nota das avaliações
+                printf("\n%s: %d",lStudent->current->info.ld->current->info.nome,sumAv);
+                average += sumAv;
+                lStudent->current->info.ld->current = lStudent->current->info.ld->current->next;
+            }
+            //Printa a média da nota de todas as Disciplinas do aluno aprovado
+            printf("\n\t\tMédia: %d", average/sizeListDisc);
+        }
+        //Passa o ponteiro Current para o proximo Aluno da lista
+        lStudent->current = lStudent->current->next;
+    }
 }
 //Ṕrinta os alunos Reprovados                                   /* 10 */
 void failedStudents(listStudent lStudent){
+    int i, j, k, contDisc = 0;
+    int sizeListStudent, sizeListDisc, sizeListAv, sumAv = 0, aprove, average = 0;
 
+    printf("\nAlunos Reprovados");
+    printf("\nMatrícula\tNome\t\t\tData de Nascimento");
+
+    sizeListStudent = lStudent->size;
+    lStudent->current = lStudent->first;
+    for(i=0;i<sizeListStudent;i++){         //Percorrer a Lista Aluno
+        aprove = 0;
+        printf("\n%d\t%s\t\t\t%s",lStudent->current->info.id,lStudent->current->info.nome,lStudent->current->info.birthDate);
+
+        sizeListDisc = lStudent->current->info.ld->size;
+        lStudent->current->info.ld->current = lStudent->current->info.ld->first;
+        for(j=0;j<sizeListDisc;i++){        //Percorrer a Lista Disciplina do Aluno corrente
+
+            sizeListAv = lStudent->current->info.ld->current->info.la->size;
+            lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
+            for(k=0;k<sizeListAv;k++){      //Percorrer a Lista Avaliação da Disciplina corrente
+
+                sumAv += lStudent->current->info.ld->current->info.la->current->info.note;
+
+                lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
+            }
+            if(sumAv > 60){
+                aprove = 1;
+                break;
+            }
+            lStudent->current->info.ld->current = lStudent->current->info.ld->current->next;
+        }
+        //Se o Aluno corrente não conseguir média em pelo menos 1 Disciplina, ele consta como reprovado,
+        //então é printado suas notas nas disciplinas e a média total
+        if(aprove == 0){
+            sizeListDisc = lStudent->current->info.ld->size;
+            lStudent->current->info.ld->current = lStudent->current->info.ld->first;
+            for(j=0;j<sizeListDisc;i++){        //Percorrer a Lista Disciplina do Aluno corrente
+
+                sizeListAv = lStudent->current->info.ld->current->info.la->size;
+                lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
+                for(k=0;k<sizeListAv;k++){      //Percorrer a Lista Avaliação da Disciplina corrente
+                    
+                    sumAv += lStudent->current->info.ld->current->info.la->current->info.note;
+                    
+                    lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
+                }
+                //Printa a Disciplina corrente e a soma da nota das avaliações
+                printf("\n%s: %d",lStudent->current->info.ld->current->info.nome,sumAv);
+                average += sumAv;
+                lStudent->current->info.ld->current = lStudent->current->info.ld->current->next;
+            }
+            //Printa a média da nota de todas as Disciplinas do aluno aprovado
+            printf("\n\t\tMédia: %d", average/sizeListDisc);
+        }
+        //Passa o ponteiro Current para o proximo Aluno da lista
+        lStudent->current = lStudent->current->next;
+    }
 }
 
 //Consulta Alunos por Matricula                                 /* 12 */

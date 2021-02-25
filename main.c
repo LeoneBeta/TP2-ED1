@@ -49,8 +49,8 @@ int main(){
         if(menu[0] == '6'){removeStudent(lStudent);}
         if(menu[0] == '7'){removeDisc(lStudent);}
         if(menu[0] == '8'){removeAv(lStudent);}
-        if(menu[0] == '9'){}
-        if(menu[0] == '1' && menu[1] == '0'){}
+        if(menu[0] == '9'){approvedStudents(lStudent);}
+        if(menu[0] == '1' && menu[1] == '0'){failedStudents(lStudent);}
         if(menu[0] == '1' && menu[1] == '1'){}
         if(menu[0] == '1' && menu[1] == '2'){consultRegistration(lStudent);}
         if(menu[0] == '1' && menu[1] == '3'){consultName(lStudent);}
