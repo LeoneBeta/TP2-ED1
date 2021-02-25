@@ -608,6 +608,56 @@ void failedStudents(listStudent lStudent){
     }
 }
 
+//ALtera Nota
+void alterNote(listStudent lStudent){
+    char menu[2], nomeDisc[50], nomeAv[50];
+    int mat, val;
+
+    do{
+        do{
+            printf("\nForneça a Matricula do Aluno");
+            scanf("%d",&mat);
+            //verifica se a matricula existe
+            val = setCurrentStudent(lStudent,mat);
+            if(val == 0)
+                printf("\nMatricula Inválida");
+        }while(val == 0);
+
+        do{
+            setbuf(stdin,NULL);
+            printf("\nForneça o nome da Disciplina");
+            fgets(nomeDisc,50,stdin);
+            removeEnter(nomeDisc);
+            textConverter(nomeDisc);
+
+            val = setCurrentDisc(lStudent->current->info.ld,nomeDisc);
+            if(val == 0)
+                printf("\nDisciplina Inválida");
+        }while(val == 0);
+        
+        do{
+            setbuf(stdin,NULL);
+            printf("\nForneça o nome da Avaliação");
+            fgets(nomeAv,50,stdin);
+            removeEnter(nomeAv);
+            textConverter(nomeAv);
+
+            val = setCurrentAv(lStudent->current->info.ld->current->info.la,nomeAv);
+            if(val == 0)
+                printf("\nAvaliação Inválida");
+        }while(val == 0);
+
+        printf("\nForneça a nova Nota");
+        scanf("%d",lStudent->current->info.ld->current->info.la->current->info.note);
+
+        setbuf(stdin,NULL);
+        printf("\nDeseja alterar outra Nota");
+        printf("\n0 - Sim ... 1 - Não ");
+        fgets(menu,2,stdin);
+        removeEnter(menu);
+    }while(menu[0] != '1');
+}
+
 //Consulta Alunos por Matricula                                 /* 12 */
 void consultRegistration(listStudent lStudent){
     char menu[2];

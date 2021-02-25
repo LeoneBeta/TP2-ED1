@@ -51,7 +51,7 @@ int main(){
         if(menu[0] == '8'){removeAv(lStudent);}
         if(menu[0] == '9'){approvedStudents(lStudent);}
         if(menu[0] == '1' && menu[1] == '0'){failedStudents(lStudent);}
-        if(menu[0] == '1' && menu[1] == '1'){}
+        if(menu[0] == '1' && menu[1] == '1'){alterNote(lStudent);}
         if(menu[0] == '1' && menu[1] == '2'){consultRegistration(lStudent);}
         if(menu[0] == '1' && menu[1] == '3'){consultName(lStudent);}
         if(menu[0] == '1' && menu[1] == '4'){}

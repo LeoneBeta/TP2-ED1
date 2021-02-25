@@ -14,6 +14,8 @@ void removeAv(listStudent);
 void approvedStudents(listStudent);
 void failedStudents(listStudent);
 
+void alterNote(listStudent);
+
 void consultRegistration(listStudent);
 void consultName(listStudent);
 
