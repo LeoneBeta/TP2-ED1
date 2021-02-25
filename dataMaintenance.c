@@ -7,18 +7,20 @@
 
 //Carrega os dados do arquivo para as listas geradas            /* 1 */
 void loadFile(FILE *Arqv, listStudent lStudent){
-    char string[500], value[2], mat[10];
+    char string[1000], value[2], mat[10];
     int i=0,j=0;
 
     TElementStudent eStudent;
     TElementDisc eDisc;
     TElementAv eAv;
 
-    openFile(&Arqv);
+    Arqv = fopen("Dados.txt", "r+");
+    if(!Arqv)
+        Arqv = fopen("Dados.txt","w+");
 
     fseek(Arqv,0,SEEK_SET);
     //Loop percorrendo o arquivo, verificando se o mesmo chegou no fim.
-    while(fgets(string,500,Arqv)){
+    while(fgets(string,1000,Arqv)){
         i = 0;
         j = 0;
         while(string[i] != '#'){
@@ -113,7 +115,7 @@ void loadFile(FILE *Arqv, listStudent lStudent){
         //o posicionando para coletar a proxima string
         fseek(Arqv,0,SEEK_CUR);
     }
-    closeFile(&Arqv);
+    fclose(Arqv);
 }
 
 //Cadastrar um novo aluno                                       /* 2 */
@@ -608,7 +610,7 @@ void failedStudents(listStudent lStudent){
     }
 }
 
-//ALtera Nota
+//ALtera Nota                                                   /* 11 */
 void alterNote(listStudent lStudent){
     char menu[2], nomeDisc[50], nomeAv[50];
     int mat, val;
@@ -648,7 +650,7 @@ void alterNote(listStudent lStudent){
         }while(val == 0);
 
         printf("\nForneça a nova Nota");
-        scanf("%d",lStudent->current->info.ld->current->info.la->current->info.note);
+        scanf("%d",&lStudent->current->info.ld->current->info.la->current->info.note);
 
         setbuf(stdin,NULL);
         printf("\nDeseja alterar outra Nota");
@@ -718,6 +720,121 @@ void consultName(listStudent lStudent){
         fgets(menu,2,stdin);
         removeEnter(menu);
     }while(menu[0] != '1');
+}
+
+//Gravar as listas no arquivo                                   /* 14 */
+void writeToFile(FILE *Arqv, listStudent lStudent){
+    char string[1000], valueString[10];
+    int i, j, k, pos = 0, posString = 0, contAv = 0, contDisc = 0;
+    int sizeListStudent, sizeListDisc, sizeListAv;
+    Arqv = fopen("Dados.txt","w+");
+    fseek(Arqv,0,SEEK_SET);
+
+    sizeListStudent = lStudent->size;
+    lStudent->current = lStudent->first;
+    for(i=0;i<sizeListStudent;i++){         //Percorrer a Lista Aluno
+        printf("\n%d\t%s\t\t\t%s",lStudent->current->info.id,lStudent->current->info.nome,lStudent->current->info.birthDate);
+
+        //  EM DESENVOLVIMENTO
+        sprintf(valueString,"%d",lStudent->current->info.id);
+        for(pos=0;pos<10;pos++){
+            if(valueString[pos] == '\0')
+                break; 
+            string[posString] = valueString[pos];
+            posString++;
+        }
+        string[posString] = '#';
+        posString++;
+        for(pos=0;pos<50;pos++){
+            if(lStudent->current->info.nome[pos] == '\n')
+                break;
+            string[posString] = lStudent->current->info.nome[pos];
+            posString++;
+        }
+        string[posString] = '#';
+        posString++;
+        for(pos=0;pos<50;pos++){
+            if(lStudent->current->info.birthDate[pos] == '\n')
+                break;
+            string[posString] = lStudent->current->info.birthDate[pos];
+            posString++;
+        }
+
+        contDisc = 0;
+        sizeListDisc = lStudent->current->info.ld->size;
+        lStudent->current->info.ld->current = lStudent->current->info.ld->first;
+        for(j=0;j<sizeListDisc;i++){        //Percorrer a Lista Disciplina do Aluno corrente
+
+            string[posString] = '@';
+            posString++;
+
+            for(pos=0;pos<50;pos++){
+                if(lStudent->current->info.ld->current->info.nome[pos] == '\n')
+                    break;
+                string[posString] = lStudent->current->info.ld->current->info.nome[pos];
+                posString++;
+            }
+            string[posString] = '#';
+            posString++;
+
+            contAv = 0;
+            sizeListAv = lStudent->current->info.ld->current->info.la->size;
+            lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
+            for(k=0;k<sizeListAv;k++){      //Percorrer a Lista Avaliação da Disciplina corrente
+
+                for(pos=0;pos<50;pos++){
+                    if(lStudent->current->info.ld->current->info.la->current->info.nomeAv[pos] == '\n')
+                        break;
+                    string[posString] = lStudent->current->info.birthDate[pos];
+                    posString++;
+                }
+                string[posString] = '#';
+                posString++;
+
+                sprintf(valueString,"%d",lStudent->current->info.ld->current->info.la->current->info.value);
+                for(pos=0;pos<10;pos++){
+                    if(valueString[pos] == '\0')
+                        break; 
+                    string[posString] = valueString[pos];
+                    posString++;
+                }
+
+                string[posString] = '#';
+                posString++;
+
+                sprintf(valueString,"%d",lStudent->current->info.ld->current->info.la->current->info.note);
+                for(pos=0;pos<10;pos++){
+                    if(valueString[pos] == '\0')
+                        break; 
+                    string[posString] = valueString[pos];
+                    posString++;
+                }
+
+                contAv++;
+                lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
+            
+                if(contAv < sizeListAv){
+                    string[posString] = '#';
+                    posString++;
+                }
+            }
+
+            contDisc++;
+            lStudent->current->info.ld->current = lStudent->current->info.ld->current->next;
+
+            if(contDisc < sizeListDisc){
+                string[posString] = '@';
+                posString++;
+            }else{
+                string[posString] = '\n';
+                posString++;
+            }
+        }
+        //Gravar a string no arquivo
+        fprintf(Arqv,"%s",string);
+        fseek(Arqv,0,SEEK_CUR);
+    }
+    fclose(Arqv);
 }
 
 //Printa a consulta requerida

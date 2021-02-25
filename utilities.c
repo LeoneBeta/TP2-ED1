@@ -4,17 +4,6 @@
 #include <ctype.h>
 #include "utilities.h"
 
-void openFile(FILE **Arqv){
-    
-    *Arqv = fopen("Dados.txt", "r+");
-    if(!*Arqv)
-        *Arqv = fopen("Dados.txt","w+");
-}
-
-void closeFile(FILE **Arqv){
-    fclose(*Arqv);
-}
-
 void removeEnter(char string[]){
 	int tamanho = strlen(string) - 1;
 	if (string[tamanho] == '\n'){
