@@ -122,6 +122,7 @@ void loadFile(FILE *Arqv, listStudent lStudent){
 void newStudent(listStudent lStudent){
     char menu[2], string[100];
     int insert, mat, val;
+    int totalDisc;
     TElementStudent eStudent;
     TElementDisc eDisc;
     TElementAv eAv;
@@ -166,6 +167,7 @@ void newStudent(listStudent lStudent){
             strcpy(eDisc.nome,string);
 
             insertEndDisc(lStudent->last->info.ld,eDisc);
+            totalDisc = 0;
             
             do{
                 setbuf(stdin,NULL);
@@ -175,9 +177,17 @@ void newStudent(listStudent lStudent){
                 textConverter(string);
                 strcpy(eAv.nomeAv,string);
 
-                setbuf(stdin,NULL);
-                printf("\nValor da Avaliação: ");
-                scanf("%d",&eAv.value);
+                printf("\nPontos para distriuição: %d",100-totalDisc);
+                do{
+                    setbuf(stdin,NULL);
+                    printf("\nValor da Avaliação: ");
+                    scanf("%d",&eAv.value);
+
+                    totalDisc += eAv.value;
+                    if(totalDisc > 100)
+                        printf("\nValor total da Disciplina ultrapassou 100 pontos");
+                }while(totalDisc > 100);
+
 
                 setbuf(stdin,NULL);
                 printf("\nNota da Avaliação: ");
@@ -209,7 +219,7 @@ void newStudent(listStudent lStudent){
 //Cadastrar uma nova Disciplina para um Aluno                   /* 3 */
 void newDisc(listStudent lStudent){
     char menu[2], string[100];
-    int insert, mat, val;
+    int insert, mat, val, totalDisc;
     TElementDisc eDisc;
     TElementAv eAv;
 
@@ -239,7 +249,7 @@ void newDisc(listStudent lStudent){
             strcpy(eDisc.nome,string);
 
             insertEndDisc(lStudent->current->info.ld,eDisc);
-            
+            totalDisc = 0;
             do{
                 setbuf(stdin,NULL);
                 printf("\nNome da Avaliação: ");
@@ -248,9 +258,16 @@ void newDisc(listStudent lStudent){
                 textConverter(string);
                 strcpy(eAv.nomeAv,string);
 
-                setbuf(stdin,NULL);
-                printf("\nValor da Avaliação: ");
-                scanf("%d",&eAv.value);
+                printf("\nPontos para distriuição: %d",100-totalDisc);
+                do{
+                    setbuf(stdin,NULL);
+                    printf("\nValor da Avaliação: ");
+                    scanf("%d",&eAv.value);
+
+                    totalDisc += eAv.value;
+                    if(totalDisc > 100)
+                        printf("\nValor total da Disciplina ultrapassou 100 pontos");
+                }while(totalDisc > 100);
 
                 setbuf(stdin,NULL);
                 printf("\nNota da Avaliação: ");
@@ -282,7 +299,7 @@ void newDisc(listStudent lStudent){
 //Cadastraruma nova avaliação numa disciplina de um aluno       /* 4 */
 void newAv(listStudent lStudent){
     char menu[2], string[100];
-    int insert, mat, val;
+    int insert, mat, val, totalDisc, i, sizeListAv;
     TElementAv eAv;
 
     do{
@@ -292,7 +309,7 @@ void newAv(listStudent lStudent){
             //verifica se a matricula existe
             val = setCurrentStudent(lStudent,mat);
             if(val == 0)
-                printf("\nMatrcula não encontrada");
+                printf("\nMatrícula não encontrada");
         }while(val == 0);
 
         do{
@@ -308,6 +325,13 @@ void newAv(listStudent lStudent){
                 if(val == 0)
                     printf("\nDisciplina não encontrada");
             }while(val == 0);
+            
+            totalDisc = 0;
+            sizeListAv = lStudent->current->info.ld->current->info.la->size;
+            for(i=0;i<sizeListAv;i++){
+                totalDisc += lStudent->current->info.ld->current->info.la->current->info.value;
+                lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
+            }
 
             do{
                 setbuf(stdin,NULL);
@@ -317,9 +341,16 @@ void newAv(listStudent lStudent){
                 textConverter(string);
                 strcpy(eAv.nomeAv,string);
 
-                setbuf(stdin,NULL);
-                printf("\nValor da Avaliação: ");
-                scanf("%d",&eAv.value);
+                printf("\nPontos para distriuição: %d",100-totalDisc);
+                do{
+                    setbuf(stdin,NULL);
+                    printf("\nValor da Avaliação: ");
+                    scanf("%d",&eAv.value);
+
+                    totalDisc += eAv.value;
+                    if(totalDisc > 100)
+                        printf("\nValor total da Disciplina ultrapassou 100 pontos");
+                }while(totalDisc > 100);
 
                 setbuf(stdin,NULL);
                 printf("\nNota da Avaliação: ");
@@ -347,6 +378,11 @@ void newAv(listStudent lStudent){
         fgets(menu,2,stdin);
         removeEnter(menu);
     }while(menu[0] != '1');
+}
+
+//Verifica a Integridade das Listas                             /* 5 */
+void checkIntegrity(listStudent lStudent){
+
 }
 
 //Remover um Aluno                                              /* 6 */

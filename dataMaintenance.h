@@ -7,6 +7,8 @@ void newStudent(listStudent);
 void newDisc(listStudent);
 void newAv(listStudent);
 
+void checkIntegrity(listStudent);
+
 void removeStudent(listStudent);
 void removeDisc(listStudent);
 void removeAv(listStudent);
