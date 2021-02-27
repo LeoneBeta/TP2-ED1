@@ -381,8 +381,43 @@ void newAv(listStudent lStudent){
 }
 
 //Verifica a Integridade das Listas                             /* 5 */
-void checkIntegrity(listStudent lStudent){
+int checkIntegrity(listStudent lStudent){
+    int i, j, k;
+    int sizeListStudent, sizeListDisc, sizeListAv, sumAv = 0;
 
+    sizeListStudent = lStudent->size;
+    if(sizeListStudent < 1){
+        printf("\nLista de Alunos vazia");
+        return 0;
+    }
+    lStudent->current = lStudent->first;
+    for(i=0;i<sizeListStudent;i++){
+        
+        sizeListDisc = lStudent->current->info.ld->size;
+        if(sizeListDisc < 1){
+            printf("\nAluno %s não está matriculado em nenhuma disciplina",lStudent->current->info.nome);
+            return 0;
+        }
+        lStudent->current->info.ld->current = lStudent->current->info.ld->first;
+        for(j=0;j<sizeListDisc;j++){
+
+            sizeListAv = lStudent->current->info.ld->current->info.la->size;
+            if(sizeListAv < 1){
+                printf("\nAluno: %s",lStudent->current->info.nome);
+                printf("\nDisciplina %s sem avaliações cadastradas", lStudent->current->info.ld->current->info.nome);
+                return 0;
+            }
+            lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
+            for(k=0;k<sizeListAv;k++){
+                sumAv += lStudent->current->info.ld->current->info.la->current->info.value;
+            }
+            if(sumAv != 100){
+                printf("\nAluno: %s",lStudent->current->info.nome);
+                printf("\nTotal de Pontos distribuidos na Disciplina %s é diferente que 100 pontos",lStudent->current->info.ld->current->info.nome);
+                return 0;
+            }
+        } 
+    }
 }
 
 //Remover um Aluno                                              /* 6 */

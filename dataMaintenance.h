@@ -7,7 +7,7 @@ void newStudent(listStudent);
 void newDisc(listStudent);
 void newAv(listStudent);
 
-void checkIntegrity(listStudent);
+int checkIntegrity(listStudent);
 
 void removeStudent(listStudent);
 void removeDisc(listStudent);
