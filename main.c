@@ -45,7 +45,7 @@ int main(){
         if(menu[0] == '2'){newStudent(lStudent);}
         if(menu[0] == '3'){newDisc(lStudent);}
         if(menu[0] == '4'){newAv(lStudent);}
-        if(menu[0] == '5'){}
+        if(menu[0] == '5'){checkIntegrity(lStudent);}
         if(menu[0] == '6'){removeStudent(lStudent);}
         if(menu[0] == '7'){removeDisc(lStudent);}
         if(menu[0] == '8'){removeAv(lStudent);}
