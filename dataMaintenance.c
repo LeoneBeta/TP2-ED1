@@ -810,11 +810,9 @@ void consultName(listStudent lStudent){
     }while(menu[0] != '1');
 }
 
-
-/*~~~~~ EM DESENVOLVIMENTO ~~~~~*/
 //Gravar as listas no arquivo                                   /* 14 */
 void writeToFile(FILE *Arqv, listStudent lStudent){
-    char string[1000], valueString[10];
+    char string[1000], valueString[11], valueAv[10],note[10];
     int i, j, k, pos = 0, posString = 0, contAv = 0, contDisc = 0, posValue = 0;
     int sizeListStudent, sizeListDisc, sizeListAv;
     Arqv = fopen("Dados.txt","w+");
@@ -822,12 +820,12 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
 
     checkIntegrity(lStudent);
 
-    /*
-    for(posString=0;posString<999;posString++)
-        string[i] = '\0';
-    for(posValue=0;posValue<9;posValue++)
+    
+    for(posString=0;posString<1000;posString++)
+        string[posString] = '\0';
+    
+    for(posValue=0;posValue<11;posValue++)
         valueString[posValue] = '\0';
-    */
 
     sizeListStudent = lStudent->size;
     lStudent->current = lStudent->first;
@@ -841,11 +839,13 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
             string[posString] = valueString[pos];
             posString++;
         }
-        //Após encontrar o /0, o programa incrementa a cerquilha separando os dados
+        for(posValue=0;posValue<9;posValue++)
+            valueString[posValue] = '\0';
+        //Após encontrar o \0, o programa incrementa a cerquilha separando os dados
         string[posString] = '#';
         posString++;
         for(pos=0;pos<50;pos++){
-            if(lStudent->current->info.nome[pos] == '\n')
+            if(lStudent->current->info.nome[pos] == '\0')
                 break;
             string[posString] = lStudent->current->info.nome[pos];
             posString++;
@@ -853,7 +853,7 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
         string[posString] = '#';
         posString++;
         for(pos=0;pos<11;pos++){
-            if(lStudent->current->info.birthDate[pos] == '\n')
+            if(lStudent->current->info.birthDate[pos] == '\0')
                 break;
             string[posString] = lStudent->current->info.birthDate[pos];
             posString++;
@@ -868,7 +868,7 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
         for(j=0;j<sizeListDisc;j++){        //Percorrer a Lista Disciplina do Aluno corrente
 
             for(pos=0;pos<20;pos++){
-                if(lStudent->current->info.ld->current->info.nome[pos] == '\n')
+                if(lStudent->current->info.ld->current->info.nome[pos] == '\0')
                     break;
                 string[posString] = lStudent->current->info.ld->current->info.nome[pos];
                 posString++;
@@ -880,31 +880,30 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
             sizeListAv = lStudent->current->info.ld->current->info.la->size;
             lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
             for(k=0;k<sizeListAv;k++){      //Percorrer a Lista Avaliação da Disciplina corrente
-
                 for(pos=0;pos<20;pos++){
-                    if(lStudent->current->info.ld->current->info.la->current->info.nomeAv[pos] == '\n')
+                    if(lStudent->current->info.ld->current->info.la->current->info.nomeAv[pos] == '\0')
                         break;
-                    string[posString] = lStudent->current->info.birthDate[pos];
+                    string[posString] = lStudent->current->info.ld->current->info.la->current->info.nomeAv[pos];
                     posString++;
                 }
                 string[posString] = '#';
                 posString++;
 
-                sprintf(valueString,"%d",lStudent->current->info.ld->current->info.la->current->info.value);
+                sprintf(valueAv,"%d",lStudent->current->info.ld->current->info.la->current->info.value);
                 for(pos=0;pos<10;pos++){
-                    if(valueString[pos] == '\0')
+                    if(valueAv[pos] == '\0')
                         break; 
-                    string[posString] = valueString[pos];
+                    string[posString] = valueAv[pos];
                     posString++;
                 }
                 string[posString] = '#';
                 posString++;
             
-                sprintf(valueString,"%d",lStudent->current->info.ld->current->info.la->current->info.note);
+                sprintf(note,"%d",lStudent->current->info.ld->current->info.la->current->info.note);
                 for(pos=0;pos<10;pos++){
-                    if(valueString[pos] == '\0')
+                    if(note[pos] == '\0')
                         break; 
-                    string[posString] = valueString[pos];
+                    string[posString] = note[pos];
                     posString++;
                 }
 
@@ -936,16 +935,15 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
                 posString++;
             }
         }
-        printf("\n%s",string);
         //Gravar a string no arquivo
         fprintf(Arqv,"%s",string);
         fseek(Arqv,0,SEEK_CUR);
         lStudent->current = lStudent->current->next;
+        for(posString=0;posString<1000;posString++)
+            string[posString] = '\0';
     }
     fclose(Arqv);
 }
-/*~~~~~ EM DESENVOLVIMENTO ~~~~~*/
-
 
 //Printa a consulta requerida
 void printList(listStudent lStudent){
