@@ -53,6 +53,10 @@ void loadFile(FILE *Arqv, listStudent lStudent){
 
         insertEndStudent(lStudent,eStudent);
 
+        printf("\n\nMatricula: %d",lStudent->last->info.id);
+        printf("\nNome: %s",lStudent->last->info.nome);
+        printf("\nData Nascimento: %s", lStudent->last->info.birthDate);
+
         //Loop que percorre as disciplinas da string, se encontrar um @ ao final da coleta dos dados
         //ele retorna armazenando outra disciplina.
         do{ 
@@ -66,6 +70,8 @@ void loadFile(FILE *Arqv, listStudent lStudent){
             j = 0;
 
             insertEndDisc(lStudent->last->info.ld,eDisc);
+            printf("\nNome Disciplina: %s",lStudent->last->info.ld->last->info.nome);
+
 
             //Loop armazenando as avaliações, no final da coleta ele verifica se exite um '@' ou '#'
             //caso encontre um '#', quer dizer que existe outra avaliação a ser coletada
@@ -101,8 +107,12 @@ void loadFile(FILE *Arqv, listStudent lStudent){
                 eAv.note = atoi(value);
                 j = 0;
                 i++;
+
                 //Passando a lista avaliação do atual aluno
                 insertEndAv(lStudent->last->info.ld->last->info.la,eAv);
+                printf("\nNome Avaliação: %s",lStudent->last->info.ld->last->info.la->last->info.nomeAv);
+                printf("\nValor: %d",lStudent->last->info.ld->last->info.la->last->info.value);
+                printf("\nNota: %d",lStudent->last->info.ld->last->info.la->last->info.note);            
 
                 if(string[i-1] == '\n')
                     break;
@@ -911,26 +921,26 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
 //Printa a consulta requerida
 void printList(listStudent lStudent){
     int sizeListDisc, sizeListAv;
-    int i, j;
+    int i = 1, j = 1;
 
     printf("\nMatrícula: %d",lStudent->current->info.id);
     printf("\nNome: %s",lStudent->current->info.nome);
     printf("\nData de Nascimento: %s",lStudent->current->info.birthDate);
 
-    //Percorre a lista de disciplinas desse aluno
-    sizeListDisc = lStudent->current->info.ld->size ;
+    sizeListDisc = lStudent->current->info.ld->size;
     //Ponteiro Current apontar para o primeiro nodo da Lista Disc
     lStudent->current->info.ld->current = lStudent->current->info.ld->first;
-    for(i=0;i<sizeListDisc;i++){
+
+    for(i=1;i<=sizeListDisc;i++){
         printf("\nDisciplina: %s", lStudent->current->info.ld->current->info.nome);
         
         //Ponteiro Current da lista Avaliação aponta para o primeiro Nodo da lista
         sizeListAv = lStudent->current->info.ld->current->info.la->size;
         lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
-        for(j=0;j<sizeListAv;i++){
-            printf("Avaliação: %s",lStudent->current->info.ld->current->info.la->current->info.nomeAv);
-            printf("Valor: %d",lStudent->current->info.ld->current->info.la->current->info.value);
-            printf("Nota: %d",lStudent->current->info.ld->current->info.la->current->info.note);
+        for(j=1;j<=sizeListAv;j++){
+            printf("\nAvaliação: %s",lStudent->current->info.ld->current->info.la->current->info.nomeAv);
+            printf("\nValor: %d",lStudent->current->info.ld->current->info.la->current->info.value);
+            printf("\nNota: %d",lStudent->current->info.ld->current->info.la->current->info.note);
             
             //Ponteiro Current da lista Av. passa a apontar para o proximo nodo da lista Avaliação
             lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
