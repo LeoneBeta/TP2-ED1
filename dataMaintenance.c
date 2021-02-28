@@ -417,17 +417,23 @@ int checkIntegrity(listStudent lStudent){
                 printf("\nDisciplina %s sem avaliações cadastradas", lStudent->current->info.ld->current->info.nome);
                 return 0;
             }
+            sumAv = 0;
             lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
             for(k=0;k<sizeListAv;k++){
                 sumAv += lStudent->current->info.ld->current->info.la->current->info.value;
+                lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
             }
             if(sumAv != 100){
                 printf("\nAluno: %s",lStudent->current->info.nome);
                 printf("\nTotal de Pontos distribuidos na Disciplina %s é diferente que 100 pontos",lStudent->current->info.ld->current->info.nome);
                 return 0;
             }
-        } 
+            lStudent->current->info.ld->current = lStudent->current->info.ld->current->next;
+        }
+        lStudent->current = lStudent->current->next;
     }
+    printf("\nListas Integras");
+    return 1;
 }
 
 //Remover um Aluno                                              /* 6 */
