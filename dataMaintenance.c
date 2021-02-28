@@ -810,19 +810,30 @@ void consultName(listStudent lStudent){
     }while(menu[0] != '1');
 }
 
+
+/*~~~~~ EM DESENVOLVIMENTO ~~~~~*/
 //Gravar as listas no arquivo                                   /* 14 */
 void writeToFile(FILE *Arqv, listStudent lStudent){
     char string[1000], valueString[10];
-    int i, j, k, pos = 0, posString = 0, contAv = 0, contDisc = 0;
+    int i, j, k, pos = 0, posString = 0, contAv = 0, contDisc = 0, posValue = 0;
     int sizeListStudent, sizeListDisc, sizeListAv;
     Arqv = fopen("Dados.txt","w+");
     fseek(Arqv,0,SEEK_SET);
 
     checkIntegrity(lStudent);
 
+    /*
+    for(posString=0;posString<999;posString++)
+        string[i] = '\0';
+    for(posValue=0;posValue<9;posValue++)
+        valueString[posValue] = '\0';
+    */
+
     sizeListStudent = lStudent->size;
     lStudent->current = lStudent->first;
     for(i=0;i<sizeListStudent;i++){         //Percorrer a Lista Aluno
+        posString = 0;
+        //Transforma o valor Matricula de int para string para manipulação
         sprintf(valueString,"%d",lStudent->current->info.id);
         for(pos=0;pos<10;pos++){
             if(valueString[pos] == '\0')
@@ -830,6 +841,7 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
             string[posString] = valueString[pos];
             posString++;
         }
+        //Após encontrar o /0, o programa incrementa a cerquilha separando os dados
         string[posString] = '#';
         posString++;
         for(pos=0;pos<50;pos++){
@@ -840,22 +852,22 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
         }
         string[posString] = '#';
         posString++;
-        for(pos=0;pos<50;pos++){
+        for(pos=0;pos<11;pos++){
             if(lStudent->current->info.birthDate[pos] == '\n')
                 break;
             string[posString] = lStudent->current->info.birthDate[pos];
             posString++;
         }
+        string[posString] = '@';
+        posString++;
+
 
         contDisc = 0;
         sizeListDisc = lStudent->current->info.ld->size;
         lStudent->current->info.ld->current = lStudent->current->info.ld->first;
         for(j=0;j<sizeListDisc;j++){        //Percorrer a Lista Disciplina do Aluno corrente
 
-            string[posString] = '@';
-            posString++;
-
-            for(pos=0;pos<50;pos++){
+            for(pos=0;pos<20;pos++){
                 if(lStudent->current->info.ld->current->info.nome[pos] == '\n')
                     break;
                 string[posString] = lStudent->current->info.ld->current->info.nome[pos];
@@ -869,7 +881,7 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
             lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
             for(k=0;k<sizeListAv;k++){      //Percorrer a Lista Avaliação da Disciplina corrente
 
-                for(pos=0;pos<50;pos++){
+                for(pos=0;pos<20;pos++){
                     if(lStudent->current->info.ld->current->info.la->current->info.nomeAv[pos] == '\n')
                         break;
                     string[posString] = lStudent->current->info.birthDate[pos];
@@ -885,10 +897,9 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
                     string[posString] = valueString[pos];
                     posString++;
                 }
-
                 string[posString] = '#';
                 posString++;
-
+            
                 sprintf(valueString,"%d",lStudent->current->info.ld->current->info.la->current->info.note);
                 for(pos=0;pos<10;pos++){
                     if(valueString[pos] == '\0')
@@ -897,18 +908,26 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
                     posString++;
                 }
 
+                //Incrementa a quantidade de avaliações lidas em seguida seta o ponteiro current das avaliações
+                //para o próximo Nodo
                 contAv++;
                 lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
             
+                //Verifica se tem mais avaliações para ser lidas, casom sim, coloca uma cerquilha para
+                //continuar a leitura
                 if(contAv < sizeListAv){
                     string[posString] = '#';
                     posString++;
                 }
             }
 
+            //Incrementa a quantiade de Disciplinas lidas, em seguida seta o ponteiro current para o próximo
+            //Nodo
             contDisc++;
             lStudent->current->info.ld->current = lStudent->current->info.ld->current->next;
 
+            //Verifica se tem mais Disciplinas neste aluno, se sim, coloca uma '@' e continua, se não, coloca 
+            //um '\n' identificando o fim da string
             if(contDisc < sizeListDisc){
                 string[posString] = '@';
                 posString++;
@@ -917,12 +936,16 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
                 posString++;
             }
         }
+        printf("\n%s",string);
         //Gravar a string no arquivo
         fprintf(Arqv,"%s",string);
         fseek(Arqv,0,SEEK_CUR);
+        lStudent->current = lStudent->current->next;
     }
     fclose(Arqv);
 }
+/*~~~~~ EM DESENVOLVIMENTO ~~~~~*/
+
 
 //Printa a consulta requerida
 void printList(listStudent lStudent){
