@@ -1,3 +1,13 @@
+/*  Segundo Trabalho Prático de Estrutura de Dados 1 - Programa de gerenciamento de Alunos, inclui transferência
+de dados do arquivo para 3 listas vinculadas, cada aluno tendo suas Disciplinas cadastradas, e em cada 
+Disciplinas, suas avaliações.
+    O programa inclui também o cadastro de novos Alunos, Disciplinas e Avaliações, alteração de notas, 
+exclusão de alunos, disciplinas e avaliações, validação da integridade das listas, Relatório de alunos 
+aprovados e Reprovados, assim como gravar as listas de volta ao arquivo com as alterações feitas
+
+Alunos: Leone Furtado Siqueira
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
