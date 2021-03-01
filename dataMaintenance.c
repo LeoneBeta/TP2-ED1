@@ -5,7 +5,8 @@
 #include "utilities.h"
 #include "dataMaintenance.h"
 
-//Carrega os dados do arquivo para as listas geradas            /* 1 */
+//Carrega os dados do arquivo para uma string de auxilio        /* 1 */
+//Percorre a String de auxilio separado os dados nas listas
 void loadFile(FILE *Arqv, listStudent lStudent){
     char string[1000], value[2], mat[10];
     int i=0,j=0;
@@ -400,6 +401,8 @@ int checkIntegrity(listStudent lStudent){
         printf("\nLista de Alunos vazia");
         return 0;
     }
+
+    //Seta o ponteiro current no inicio da lista Student, assim repetindo nas listas seguintes
     lStudent->current = lStudent->first;
     for(i=0;i<sizeListStudent;i++){
 
@@ -430,6 +433,7 @@ int checkIntegrity(listStudent lStudent){
             }
             lStudent->current->info.ld->current = lStudent->current->info.ld->current->next;
         }
+        //Seta o ponteiro currente para o proximo nodo da lsita, assim como nas outras listas
         lStudent->current = lStudent->current->next;
     }
     printf("\nListas Integras");
@@ -445,7 +449,8 @@ void removeStudent(listStudent lStudent){
         do{
             printf("\nForneça a Matricula");
             scanf("%d",&mat);
-            //verifica se a matricula existe
+
+            //verifica se a matricula existe e seta o ponteiro current no aluno com a matricula fornecida
             val = setCurrentStudent(lStudent,mat);
             if(val == 0)
                 printf("\nMatricula Inválida");
@@ -481,7 +486,8 @@ void removeDisc(listStudent lStudent){
         do{
             printf("\nForneça a Matricula do Aluno");
             scanf("%d",&mat);
-            //verifica se a matricula existe
+
+            //verifica se a matricula existe e seta o ponteiro current no aluno requerido
             val = setCurrentStudent(lStudent,mat);
             if(val == 0)
                 printf("\nMatricula Inválida");
@@ -494,6 +500,7 @@ void removeDisc(listStudent lStudent){
             removeEnter(nomeDisc);
             textConverter(nomeDisc);
 
+            //Verifica se existe a disciplina fornecida e seta o ponteiro current 
             val = setCurrentDisc(lStudent->current->info.ld,nomeDisc);
             if(val == 0)
                 printf("\nDisciplina Inválida");
@@ -527,7 +534,8 @@ void removeAv(listStudent lStudent){
         do{
             printf("\nForneça a Matricula do Aluno");
             scanf("%d",&mat);
-            //verifica se a matricula existe
+
+            //verifica se a matricula existe e seta o ponteiro current no aluno requerido
             val = setCurrentStudent(lStudent,mat);
             if(val == 0)
                 printf("\nMatricula Inválida");
@@ -540,6 +548,7 @@ void removeAv(listStudent lStudent){
             removeEnter(nomeDisc);
             textConverter(nomeDisc);
 
+            //Verifica se existe a disciplina fornecida e seta o ponteiro current 
             val = setCurrentDisc(lStudent->current->info.ld,nomeDisc);
             if(val == 0)
                 printf("\nDisciplina Inválida");
@@ -552,6 +561,7 @@ void removeAv(listStudent lStudent){
             removeEnter(nomeAv);
             textConverter(nomeAv);
 
+            //Verifica se a avaliação existe e seta o ponteiro current na avaliação desejada
             val = setCurrentAv(lStudent->current->info.ld->current->info.la,nomeAv);
             if(val == 0)
                 printf("\nAvaliação Inválida");
@@ -605,6 +615,7 @@ void approvedStudents(listStudent lStudent){
 
                 lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
             }
+            //Verifica se a a soma das notas do aluno é inferior a 60 pontos 
             if(sumAv < 60){
                 aprove = 0;
                 break;
@@ -663,6 +674,7 @@ void failedStudents(listStudent lStudent){
 
                 lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
             }
+            //Verifica se a soma das notas dessa avaliação é maior que 60
             if(sumAv > 60){
                 aprove = 1;
                 break;
@@ -763,6 +775,7 @@ void consultRegistration(listStudent lStudent){
                 printf("\nMatricula Inválida");
         }while(val == 0);
 
+        //Função para printar o aluno salvo pelo ponteiro current
         printList(lStudent);
 
         setbuf(stdin,NULL);
@@ -811,6 +824,9 @@ void consultName(listStudent lStudent){
 }
 
 //Gravar as listas no arquivo                                   /* 14 */
+//Essa função inicialmente faz a verificação de integridade do arquivo, em seguida começa a percorrer a lista
+//de alunos construindo uma string com cada aluno, separando os dados com '#', '@' nos suas determinadas
+//posições, e inserindo '\n' ao final da string, assim a armazenando no arquivo
 void writeToFile(FILE *Arqv, listStudent lStudent){
     char string[1000], valueString[11], valueAv[10],note[10];
     int i, j, k, pos = 0, posString = 0, contAv = 0, contDisc = 0, posValue = 0;
@@ -819,7 +835,6 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
     fseek(Arqv,0,SEEK_SET);
 
     checkIntegrity(lStudent);
-
 
     for(posString=0;posString<1000;posString++)
         string[posString] = '\0';
