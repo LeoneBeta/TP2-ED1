@@ -59,7 +59,7 @@ void loadFile(FILE *Arqv, listStudent lStudent){
 
         //Loop que percorre as disciplinas da string, se encontrar um @ ao final da coleta dos dados
         //ele retorna armazenando outra disciplina.
-        do{ 
+        do{
             while(string[i] != '#'){
                 eDisc.nome[j] = string[i];
                 i++;
@@ -76,7 +76,7 @@ void loadFile(FILE *Arqv, listStudent lStudent){
             //Loop armazenando as avaliações, no final da coleta ele verifica se exite um '@' ou '#'
             //caso encontre um '#', quer dizer que existe outra avaliação a ser coletada
             do{
-                
+
                 while(string[i] != '#'){
                     eAv.nomeAv[j] = string[i];
                     i++;
@@ -112,7 +112,7 @@ void loadFile(FILE *Arqv, listStudent lStudent){
                 insertEndAv(lStudent->last->info.ld->last->info.la,eAv);
                 printf("\nNome Avaliação: %s",lStudent->last->info.ld->last->info.la->last->info.nomeAv);
                 printf("\nValor: %d",lStudent->last->info.ld->last->info.la->last->info.value);
-                printf("\nNota: %d",lStudent->last->info.ld->last->info.la->last->info.note);            
+                printf("\nNota: %d",lStudent->last->info.ld->last->info.la->last->info.note);
 
                 if(string[i-1] == '\n')
                     break;
@@ -131,7 +131,7 @@ void loadFile(FILE *Arqv, listStudent lStudent){
 //Cadastrar um novo aluno                                       /* 2 */
 void newStudent(listStudent lStudent){
     char menu[2], string[100];
-    int insert, mat, val;
+    int mat, val;
     int totalDisc;
     TElementStudent eStudent;
     TElementDisc eDisc;
@@ -165,7 +165,7 @@ void newStudent(listStudent lStudent){
         textConverter(string);
         //Verificaçaõ da data de nascimento
         strcpy(eStudent.birthDate,string);
-        
+
         insertEndStudent(lStudent,eStudent);
 
         do{
@@ -178,7 +178,7 @@ void newStudent(listStudent lStudent){
 
             insertEndDisc(lStudent->last->info.ld,eDisc);
             totalDisc = 0;
-            
+
             do{
                 setbuf(stdin,NULL);
                 printf("\nNome da Avaliação: ");
@@ -229,7 +229,7 @@ void newStudent(listStudent lStudent){
 //Cadastrar uma nova Disciplina para um Aluno                   /* 3 */
 void newDisc(listStudent lStudent){
     char menu[2], string[100];
-    int insert, mat, val, totalDisc;
+    int mat, val, totalDisc;
     TElementDisc eDisc;
     TElementAv eAv;
 
@@ -309,7 +309,7 @@ void newDisc(listStudent lStudent){
 //Cadastraruma nova avaliação numa disciplina de um aluno       /* 4 */
 void newAv(listStudent lStudent){
     char menu[2], string[100];
-    int insert, mat, val, totalDisc, i, sizeListAv;
+    int mat, val, totalDisc, i, sizeListAv;
     TElementAv eAv;
 
     do{
@@ -335,7 +335,7 @@ void newAv(listStudent lStudent){
                 if(val == 0)
                     printf("\nDisciplina não encontrada");
             }while(val == 0);
-            
+
             totalDisc = 0;
             sizeListAv = lStudent->current->info.ld->current->info.la->size;
             for(i=0;i<sizeListAv;i++){
@@ -402,7 +402,7 @@ int checkIntegrity(listStudent lStudent){
     }
     lStudent->current = lStudent->first;
     for(i=0;i<sizeListStudent;i++){
-        
+
         sizeListDisc = lStudent->current->info.ld->size;
         if(sizeListDisc < 1){
             printf("\nAluno %s não está matriculado em nenhuma disciplina",lStudent->current->info.nome);
@@ -544,7 +544,7 @@ void removeAv(listStudent lStudent){
             if(val == 0)
                 printf("\nDisciplina Inválida");
         }while(val == 0);
-        
+
         do{
             setbuf(stdin,NULL);
             printf("\nForneça o nome da Avaliação");
@@ -580,7 +580,7 @@ void removeAv(listStudent lStudent){
 
 //Printa os alunos Aprovados                                    /* 9 */
 void approvedStudents(listStudent lStudent){
-    int i, j, k, contDisc = 0;
+    int i, j, k;
     int sizeListStudent, sizeListDisc, sizeListAv, sumAv = 0, aprove;
 
     printf("\nAlunos Aprovados");
@@ -622,9 +622,9 @@ void approvedStudents(listStudent lStudent){
                 sizeListAv = lStudent->current->info.ld->current->info.la->size;
                 lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
                 for(k=0;k<sizeListAv;k++){      //Percorrer a Lista Avaliação da Disciplina corrente
-                    
+
                     sumAv += lStudent->current->info.ld->current->info.la->current->info.note;
-                    
+
                     lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
                 }
                 //Printa a Disciplina corrente e a soma da nota das avaliações
@@ -640,7 +640,7 @@ void approvedStudents(listStudent lStudent){
 }
 //Ṕrinta os alunos Reprovados                                   /* 10 */
 void failedStudents(listStudent lStudent){
-    int i, j, k, contDisc = 0;
+    int i, j, k;
     int sizeListStudent, sizeListDisc, sizeListAv, sumAv = 0, aprove, average = 0;
 
     printf("\nAlunos Reprovados");
@@ -680,9 +680,9 @@ void failedStudents(listStudent lStudent){
                 sizeListAv = lStudent->current->info.ld->current->info.la->size;
                 lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
                 for(k=0;k<sizeListAv;k++){      //Percorrer a Lista Avaliação da Disciplina corrente
-                    
+
                     sumAv += lStudent->current->info.ld->current->info.la->current->info.note;
-                    
+
                     lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
                 }
                 //Printa a Disciplina corrente e a soma da nota das avaliações
@@ -724,7 +724,7 @@ void alterNote(listStudent lStudent){
             if(val == 0)
                 printf("\nDisciplina Inválida");
         }while(val == 0);
-        
+
         do{
             setbuf(stdin,NULL);
             printf("\nForneça o nome da Avaliação");
@@ -751,7 +751,7 @@ void alterNote(listStudent lStudent){
 //Consulta Alunos por Matricula                                 /* 12 */
 void consultRegistration(listStudent lStudent){
     char menu[2];
-    int mat, val, i, j;
+    int mat, val;
 
     do{
         do{
@@ -775,7 +775,7 @@ void consultRegistration(listStudent lStudent){
 //Consulta Alunos por Nome                                      /* 13 */
 void consultName(listStudent lStudent){
     char menu[2], pref[5];
-    int val = 0, i, j, sizeListStudent;
+    int val = 0, i, sizeListStudent;
 
     do{
         do{
@@ -820,10 +820,10 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
 
     checkIntegrity(lStudent);
 
-    
+
     for(posString=0;posString<1000;posString++)
         string[posString] = '\0';
-    
+
     for(posValue=0;posValue<11;posValue++)
         valueString[posValue] = '\0';
 
@@ -835,7 +835,7 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
         sprintf(valueString,"%d",lStudent->current->info.id);
         for(pos=0;pos<10;pos++){
             if(valueString[pos] == '\0')
-                break; 
+                break;
             string[posString] = valueString[pos];
             posString++;
         }
@@ -892,17 +892,17 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
                 sprintf(valueAv,"%d",lStudent->current->info.ld->current->info.la->current->info.value);
                 for(pos=0;pos<10;pos++){
                     if(valueAv[pos] == '\0')
-                        break; 
+                        break;
                     string[posString] = valueAv[pos];
                     posString++;
                 }
                 string[posString] = '#';
                 posString++;
-            
+
                 sprintf(note,"%d",lStudent->current->info.ld->current->info.la->current->info.note);
                 for(pos=0;pos<10;pos++){
                     if(note[pos] == '\0')
-                        break; 
+                        break;
                     string[posString] = note[pos];
                     posString++;
                 }
@@ -911,7 +911,7 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
                 //para o próximo Nodo
                 contAv++;
                 lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
-            
+
                 //Verifica se tem mais avaliações para ser lidas, casom sim, coloca uma cerquilha para
                 //continuar a leitura
                 if(contAv < sizeListAv){
@@ -925,7 +925,7 @@ void writeToFile(FILE *Arqv, listStudent lStudent){
             contDisc++;
             lStudent->current->info.ld->current = lStudent->current->info.ld->current->next;
 
-            //Verifica se tem mais Disciplinas neste aluno, se sim, coloca uma '@' e continua, se não, coloca 
+            //Verifica se tem mais Disciplinas neste aluno, se sim, coloca uma '@' e continua, se não, coloca
             //um '\n' identificando o fim da string
             if(contDisc < sizeListDisc){
                 string[posString] = '@';
@@ -960,7 +960,7 @@ void printList(listStudent lStudent){
 
     for(i=1;i<=sizeListDisc;i++){
         printf("\nDisciplina: %s", lStudent->current->info.ld->current->info.nome);
-        
+
         //Ponteiro Current da lista Avaliação aponta para o primeiro Nodo da lista
         sizeListAv = lStudent->current->info.ld->current->info.la->size;
         lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->first;
@@ -968,7 +968,7 @@ void printList(listStudent lStudent){
             printf("\nAvaliação: %s",lStudent->current->info.ld->current->info.la->current->info.nomeAv);
             printf("\nValor: %d",lStudent->current->info.ld->current->info.la->current->info.value);
             printf("\nNota: %d",lStudent->current->info.ld->current->info.la->current->info.note);
-            
+
             //Ponteiro Current da lista Av. passa a apontar para o proximo nodo da lista Avaliação
             lStudent->current->info.ld->current->info.la->current = lStudent->current->info.ld->current->info.la->current->next;
         }
